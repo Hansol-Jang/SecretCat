@@ -16,7 +16,7 @@ public class Move_Up : MonoBehaviour {
 
     void OnPointerDown(PointerEventData data)
     {
-        if (Input.touchCount == 1) {
+        //if (Input.touchCount == 1) {
             GameObject player = GameObject.Find("Player");
             PlayerController pl_con = player.GetComponent<PlayerController>();
             GameObject BM = GameObject.Find("BoardManager");
@@ -35,6 +35,6 @@ public class Move_Up : MonoBehaviour {
                     }
                 }
             }
-        }
+        //}
     }
 }

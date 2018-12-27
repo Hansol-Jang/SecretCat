@@ -61,7 +61,7 @@ public class Dog1X_Ray : MonoBehaviour
 
         else return false;
     }
-    protected bool Move2(out RaycastHit2D hit) //움직임 함수
+    protected bool Move2(out RaycastHit2D hit)
     {
         boxCollider.enabled = false;
         hit = Physics2D.Linecast(start, end2, blokingLayer2);

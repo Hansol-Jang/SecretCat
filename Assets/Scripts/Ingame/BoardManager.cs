@@ -23,6 +23,7 @@ public class BoardManager : MonoBehaviour {
     public GameObject floor1;
     public GameObject floor2;
     public GameObject floor3;
+    public GameObject Cam;
 
     public int is_floor; //현재 플로어
     public bool is_clear = false; //그 스테이지를 클리어했니?
@@ -424,6 +425,14 @@ public class BoardManager : MonoBehaviour {
         GameManager.instance.is_menu = true;
     }
 
+    void Tutorial_Move()
+    {
+        GameObject board = GameObject.Find("Board");
+        BoardTileLoc btl = board.GetComponent<BoardTileLoc>();
+        GameObject t = GameObject.Find("Tutorial");
+        t.transform.position += new Vector3(btl.camera_loc[0], btl.camera_loc[1], 0f);
+    }
+
     void FloorDisplay() //플로어 UI를 보이기
     {
         GameObject board = GameObject.Find("Board");
@@ -459,16 +468,28 @@ public class BoardManager : MonoBehaviour {
         }
     }
 
+    void CameraSetting()
+    {
+        GameObject board = GameObject.Find("Board");
+        BoardTileLoc btl = board.GetComponent<BoardTileLoc>();
+        Cam.transform.position += new Vector3(btl.camera_loc[0], btl.camera_loc[1], 0f);
+    }
+
     public void SetScene(int level) { //보드 만드는 함수
         if (level == 1 || level == 2 || level == 6 || level == 7 || level == 11 || level == 12) //--> 튜토리얼 늘어날 때마다 추가
         {
             Tutorial(level);
         }
         BoardSetup(level);
+        if (level == 1 || level == 2 || level == 6 || level == 7 || level == 11 || level == 12) //--> 튜토리얼 늘어날 때마다 추가
+        {
+            Tutorial_Move();
+        }
         UnitSetup();
         PortalSetup();
         StairSetup();
         ClearTileSetup();
         FloorDisplay();
+        CameraSetting();
     }
 }

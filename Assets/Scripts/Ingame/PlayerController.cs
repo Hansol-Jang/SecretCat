@@ -186,6 +186,15 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.gameObject.tag == "ClearTile" && !cat_death) //클리어 타일에 닿았을 때
         {
+            StartCoroutine("ClearTime");
+        }
+    }
+
+    protected IEnumerator ClearTime()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (!cat_death)
+        {
             BM_SC.is_clear = true;
             GameManager.instance.is_menu = true;
             GameManager.instance.StageClear();

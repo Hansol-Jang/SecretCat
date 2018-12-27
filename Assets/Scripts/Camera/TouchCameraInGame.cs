@@ -10,7 +10,7 @@ public class TouchCameraInGame : MonoBehaviour
     public GameObject Collider_Up; //가장 위쪽
     public GameObject Collider_Down; //가장 아래쪽
 
-    public float orthoZoomSpeed = 0.0001f;        // The rate of change of the orthographic size in orthographic mode.
+    public float orthoZoomSpeed = 0.0000001f; // The rate of change of the orthographic size in orthographic mode.
 
     Camera cam; //카메라
     Vector2 oldTouchPosition; //기존 포지션

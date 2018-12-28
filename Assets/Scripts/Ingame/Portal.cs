@@ -34,6 +34,8 @@ public class Portal : MonoBehaviour {
                         temp_loc[0] = GameManager.instance.portals[i].is_loc_portal[1];
                         temp_loc[1] = GameManager.instance.portals[i].is_loc_portal[2];
                         pl_con.teleport_position = new Vector3(-3.5f + temp_loc[0], -4.5f + temp_loc[1], 0f);
+                        GameObject Cam = GameObject.Find("Main Camera");
+                        Cam.transform.position = new Vector3(-3.5f + temp_loc[0], -4.5f + temp_loc[1], -10f);
                         break;
                     }
                 }

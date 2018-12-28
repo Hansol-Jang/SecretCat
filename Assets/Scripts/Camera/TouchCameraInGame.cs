@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TouchCameraInGame : MonoBehaviour
 {
+    public bool nonbutton = false;
 
     public GameObject Collider_Left; //가장 왼쪽
     public GameObject Collider_Right; //가장 오른쪽
@@ -27,7 +28,7 @@ public class TouchCameraInGame : MonoBehaviour
         { //터치를 끝냈을 때
             oldTouchPosition = new Vector2(-9999f, -9999f);
         }
-        else if (Input.touchCount == 1)
+        else if (Input.touchCount == 1 && !nonbutton)
         {
             if (!GameManager.instance.is_menu)
             { //메뉴가 켜져있지 않으면
@@ -61,7 +62,7 @@ public class TouchCameraInGame : MonoBehaviour
                 }
             }
         }
-        else if (Input.touchCount == 2)
+        else if (Input.touchCount == 2 && !nonbutton)
         {
             if (!GameManager.instance.is_menu)
             {

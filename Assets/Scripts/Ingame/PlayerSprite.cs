@@ -14,4 +14,11 @@ public class PlayerSprite : MonoBehaviour {
     public Sprite main7; //뼈1
     public Sprite main8; //뼈2
     public Sprite main9; //뼈3
+
+    public Animator cat_anim;
+
+    protected void Start()
+    {
+        cat_anim = transform.GetComponent<Animator>();
+    }
 }

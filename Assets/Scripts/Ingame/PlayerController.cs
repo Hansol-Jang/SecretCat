@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     private BoardTileLoc loctile; // 보드타일록 스크립트
     private BoxCollider2D boxCollider;
     private Rigidbody2D rg2D;
-    private SpriteRenderer pl_sp; //Player_Sprite의 SpriteRenderer
+    private PlayerSprite ps_sp;
     private Text boneText; //뼈다귀 던지는 횟수
     private Text moveText; //이동한 횟수
 
@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
         BM_SC = BM.GetComponent<BoardManager>();
         loctile = board.GetComponent<BoardTileLoc>();
         sp = transform.GetChild(0).gameObject;
-        pl_sp = sp.GetComponent<SpriteRenderer>();
+        ps_sp = sp.GetComponent<PlayerSprite>();
         boneText = MC.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(2).gameObject.transform.GetChild(1).gameObject.GetComponent<Text>();
         moveText = MC.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(3).gameObject.transform.GetChild(1).gameObject.GetComponent<Text>();
         bone_num = loctile.bone_limit;
@@ -91,10 +91,7 @@ public class PlayerController : MonoBehaviour
                 if (mv)
                 {
                     is_loc[1] += 1; // Y축 위치 +1
-                    if (pl_sp.sprite != sp.GetComponent<PlayerSprite>().main2)
-                    {
-                        pl_sp.sprite = sp.GetComponent<PlayerSprite>().main2;
-                    }
+                    ps_sp.cat_anim.SetInteger("Move", 3);
                     mv_num += 1;
                     moveText.text = mv_num.ToString();
                     GameManager.instance.playerTurn = false; // 플레이어 턴에서 강아지 턴으로 넘어감
@@ -113,10 +110,7 @@ public class PlayerController : MonoBehaviour
                 if (mv)
                 {
                     is_loc[1] -= 1; //Y축 위치 -1
-                    if (pl_sp.sprite != sp.GetComponent<PlayerSprite>().main0)
-                    {
-                        pl_sp.sprite = sp.GetComponent<PlayerSprite>().main0;
-                    }
+                    ps_sp.cat_anim.SetInteger("Move", 1);
                     mv_num += 1;
                     moveText.text = mv_num.ToString();
                     GameManager.instance.playerTurn = false;
@@ -135,10 +129,7 @@ public class PlayerController : MonoBehaviour
                 if (mv)
                 {
                     is_loc[0] -= 1; //X축 위치 -1
-                    if (pl_sp.sprite != sp.GetComponent<PlayerSprite>().main1)
-                    {
-                        pl_sp.sprite = sp.GetComponent<PlayerSprite>().main1;
-                    }
+                    ps_sp.cat_anim.SetInteger("Move", 2);
                     mv_num += 1;
                     moveText.text = mv_num.ToString();
                     GameManager.instance.playerTurn = false;
@@ -157,10 +148,7 @@ public class PlayerController : MonoBehaviour
                 if (mv)
                 {
                     is_loc[0] += 1; //X축 위치 +1
-                    if (pl_sp.sprite != sp.GetComponent<PlayerSprite>().main3)
-                    {
-                        pl_sp.sprite = sp.GetComponent<PlayerSprite>().main3;
-                    }
+                    ps_sp.cat_anim.SetInteger("Move", 4);
                     mv_num += 1;
                     moveText.text = mv_num.ToString();
                     GameManager.instance.playerTurn = false;
@@ -203,24 +191,12 @@ public class PlayerController : MonoBehaviour
 
     public void Die() //죽을 때 스프라이트 바뀌는 함수
     {
-        if (cat_death)
-        {
-            if (pl_sp.sprite != sp.GetComponent<PlayerSprite>().main4)
-            {
-                pl_sp.sprite = sp.GetComponent<PlayerSprite>().main4;
-            }
-        }
+            ps_sp.cat_anim.SetBool("Die", true);
     }
 
     public void ClearSP() //클리어했을 때 스프라이트 바뀌는 함수
     {
-        if (BM_SC.is_clear == true)
-        {
-            if (pl_sp.sprite != sp.GetComponent<PlayerSprite>().main5)
-            {
-                pl_sp.sprite = sp.GetComponent<PlayerSprite>().main5;
-            }
-        }
+            ps_sp.cat_anim.SetBool("Clear", true);
     }
 
     public void Move_Up() { //위로 움직이는 함수
@@ -252,7 +228,7 @@ public class PlayerController : MonoBehaviour
         transform.GetChild(2).gameObject.SetActive(false);
         transform.GetChild(3).gameObject.SetActive(false);
         transform.GetChild(4).gameObject.SetActive(false);
-        pl_sp.sprite = sp.GetComponent<PlayerSprite>().main0;
+        ps_sp.cat_anim.SetBool("Bone", false);
     }
 
     public void Ready_Bone() //뼈다귀 액션 버튼 눌렀을 때 나타나는 함수
@@ -263,7 +239,7 @@ public class PlayerController : MonoBehaviour
             GameObject bone_instance = Instantiate(bone) as GameObject;//뼈다귀 생성
             bone_instance.GetComponent<SpriteRenderer>().sprite = null;
             bone_instance.name = "Bone";
-            pl_sp.sprite = sp.GetComponent<PlayerSprite>().main6;
+            ps_sp.cat_anim.SetBool("Bone", true);
             bone_instance.transform.position = transform.position + new Vector3(0f,0f,0.15f);
             RaycastHit2D hit;
             if (hitCollider(-1,0,out hit))
@@ -293,7 +269,7 @@ public class PlayerController : MonoBehaviour
     public void Bone_Up() //뼈다귀 위로 던지기
     {
         boninging = true;
-        pl_sp.sprite = sp.GetComponent<PlayerSprite>().main8;
+        ps_sp.cat_anim.SetInteger("Boning", 3);
         GameObject bone_in = GameObject.Find("Bone");
         bone_in.GetComponent<SpriteRenderer>().sprite = bone_sp;
         bone_num -= 1;
@@ -304,7 +280,7 @@ public class PlayerController : MonoBehaviour
     public void Bone_Down() //뼈다귀 아래로 던지기
     {
         boninging = true;
-        pl_sp.sprite = sp.GetComponent<PlayerSprite>().main6;
+        ps_sp.cat_anim.SetInteger("Boning", 1);
         GameObject bone_in = GameObject.Find("Bone");
         bone_in.GetComponent<SpriteRenderer>().sprite = bone_sp;
         bone_num -= 1;
@@ -315,7 +291,7 @@ public class PlayerController : MonoBehaviour
     public void Bone_Left() //뼈다귀 왼쪽으로 던지기
     {
         boninging = true;
-        pl_sp.sprite = sp.GetComponent<PlayerSprite>().main7;
+        ps_sp.cat_anim.SetInteger("Boning", 2);
         GameObject bone_in = GameObject.Find("Bone");
         bone_in.GetComponent<SpriteRenderer>().sprite = bone_sp;
         bone_num -= 1;
@@ -326,7 +302,7 @@ public class PlayerController : MonoBehaviour
     public void Bone_Right() //뼈다귀 오른쪽으로 던지기
     {
         boninging = true;
-        pl_sp.sprite = sp.GetComponent<PlayerSprite>().main9;
+        ps_sp.cat_anim.SetInteger("Boning", 4);
         GameObject bone_in = GameObject.Find("Bone");
         bone_in.GetComponent<SpriteRenderer>().sprite = bone_sp;
         bone_num -= 1;
@@ -444,7 +420,7 @@ public class PlayerController : MonoBehaviour
         float sqrRemainingDistance = (bone_in.transform.position - end).sqrMagnitude;
         float x_speed = 1.5f;
         float y_speed = 1.5f;
-        while (sqrRemainingDistance > 0.02f)
+        while (sqrRemainingDistance > 0.025f)
         {
             bone_in.transform.localScale += new Vector3(x_scale,y_scale,0f);
             bone_in.GetComponent<Rigidbody2D>().velocity = new Vector3(horizontalMove * x_speed, verticalMove * y_speed, 0f);

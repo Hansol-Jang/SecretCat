@@ -14,9 +14,7 @@ public class BoardManager : MonoBehaviour {
     public GameObject dog11;
     public GameObject dog12;
     public GameObject dog13;
-    public GameObject portal0;
-    public GameObject portal1;
-    public GameObject portal2;
+    public GameObject[] portal = new GameObject[15];
     public GameObject cleartile;
     public GameObject stair1;
     public GameObject stair2;
@@ -239,21 +237,9 @@ public class BoardManager : MonoBehaviour {
             { //portal_num의 크기만큼 포탈을 만든다.
                 if (btl.portal_num[i].portal_loc[3] == 3)
                 {
-                    if (btl.portal_num[i].portal_loc[0] == -1 || btl.portal_num[i].portal_loc[0] == 1)
-                    {
-                        GameObject instance = Instantiate(portal0, portalboard3.transform) as GameObject;
-                        instance.transform.position += new Vector3(btl.portal_num[i].portal_loc[1], btl.portal_num[i].portal_loc[2], 990f);
-                    }
-                    else if (btl.portal_num[i].portal_loc[0] == -2 || btl.portal_num[i].portal_loc[0] == 2)
-                    {
-                        GameObject instance = Instantiate(portal1, portalboard3.transform) as GameObject;
-                        instance.transform.position += new Vector3(btl.portal_num[i].portal_loc[1], btl.portal_num[i].portal_loc[2], 990f);
-                    }
-                    else if (btl.portal_num[i].portal_loc[0] == -3 || btl.portal_num[i].portal_loc[0] == 3)
-                    {
-                        GameObject instance = Instantiate(portal2, portalboard3.transform) as GameObject;
-                        instance.transform.position += new Vector3(btl.portal_num[i].portal_loc[1], btl.portal_num[i].portal_loc[2], 990f);
-                    }
+                    int j = Mathf.Abs(btl.portal_num[i].portal_loc[0]);
+                    GameObject instance = Instantiate(portal[j - 1], portalboard3.transform) as GameObject;
+                    instance.transform.position += new Vector3(btl.portal_num[i].portal_loc[1], btl.portal_num[i].portal_loc[2], 990f);
                 }
             }
         }
@@ -264,21 +250,9 @@ public class BoardManager : MonoBehaviour {
             { //portal_num의 크기만큼 포탈을 만든다.
                 if (btl.portal_num[i].portal_loc[3] == 2)
                 {
-                    if (btl.portal_num[i].portal_loc[0] == -1 || btl.portal_num[i].portal_loc[0] == 1)
-                    {
-                        GameObject instance = Instantiate(portal0, portalboard2.transform) as GameObject;
-                        instance.transform.position += new Vector3(btl.portal_num[i].portal_loc[1], btl.portal_num[i].portal_loc[2], 990f);
-                    }
-                    else if (btl.portal_num[i].portal_loc[0] == -2 || btl.portal_num[i].portal_loc[0] == 2)
-                    {
-                        GameObject instance = Instantiate(portal1, portalboard2.transform) as GameObject;
-                        instance.transform.position += new Vector3(btl.portal_num[i].portal_loc[1], btl.portal_num[i].portal_loc[2], 990f);
-                    }
-                    else if (btl.portal_num[i].portal_loc[0] == -3 || btl.portal_num[i].portal_loc[0] == 3)
-                    {
-                        GameObject instance = Instantiate(portal2, portalboard2.transform) as GameObject;
-                        instance.transform.position += new Vector3(btl.portal_num[i].portal_loc[1], btl.portal_num[i].portal_loc[2], 990f);
-                    }
+                    int j = Mathf.Abs(btl.portal_num[i].portal_loc[0]);
+                    GameObject instance = Instantiate(portal[j - 1], portalboard2.transform) as GameObject;
+                    instance.transform.position += new Vector3(btl.portal_num[i].portal_loc[1], btl.portal_num[i].portal_loc[2], 990f);
                 }
             }
         }
@@ -289,21 +263,9 @@ public class BoardManager : MonoBehaviour {
             { //portal_num의 크기만큼 포탈을 만든다.
                 if (btl.portal_num[i].portal_loc[3] == 1)
                 {
-                    if (btl.portal_num[i].portal_loc[0] == -1 || btl.portal_num[i].portal_loc[0] == 1)
-                    {
-                        GameObject instance = Instantiate(portal0, portalboard1.transform) as GameObject;
-                        instance.transform.position += new Vector3(btl.portal_num[i].portal_loc[1], btl.portal_num[i].portal_loc[2], 990f);
-                    }
-                    else if (btl.portal_num[i].portal_loc[0] == -2 || btl.portal_num[i].portal_loc[0] == 2)
-                    {
-                        GameObject instance = Instantiate(portal1, portalboard1.transform) as GameObject;
-                        instance.transform.position += new Vector3(btl.portal_num[i].portal_loc[1], btl.portal_num[i].portal_loc[2], 990f);
-                    }
-                    else if (btl.portal_num[i].portal_loc[0] == -3 || btl.portal_num[i].portal_loc[0] == 3)
-                    {
-                        GameObject instance = Instantiate(portal2, portalboard1.transform) as GameObject;
-                        instance.transform.position += new Vector3(btl.portal_num[i].portal_loc[1], btl.portal_num[i].portal_loc[2], 990f);
-                    }
+                    int j = Mathf.Abs(btl.portal_num[i].portal_loc[0]);
+                    GameObject instance = Instantiate(portal[j-1], portalboard1.transform) as GameObject;
+                    instance.transform.position += new Vector3(btl.portal_num[i].portal_loc[1], btl.portal_num[i].portal_loc[2], 990f);
                 }
             }
         }

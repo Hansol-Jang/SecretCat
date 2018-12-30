@@ -420,7 +420,7 @@ public class PlayerController : MonoBehaviour
         float sqrRemainingDistance = (bone_in.transform.position - end).sqrMagnitude;
         float x_speed = 1.5f;
         float y_speed = 1.5f;
-        while (sqrRemainingDistance > 0.025f)
+        while (sqrRemainingDistance > 0.15f)
         {
             bone_in.transform.localScale += new Vector3(x_scale,y_scale,0f);
             bone_in.GetComponent<Rigidbody2D>().velocity = new Vector3(horizontalMove * x_speed, verticalMove * y_speed, 0f);

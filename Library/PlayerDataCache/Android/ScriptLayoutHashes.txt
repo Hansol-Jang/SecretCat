@@ -1,6 +1,6 @@
 Android
 PlayerPath?
-E:/Make/SecretCat/Build0.82[Developer].apk
+E:/Make/SecretCat/Build0.83[Developer].apk
 SceneListBegin?
 Assets/Scenes/main.unity
 Assets/Scenes/loading.unity
@@ -149,6 +149,7 @@ e1ea12ca952c81d81a9a21fdf34446ed UnityEngine.HoloLens.dll:UnityEngine.EventSyste
 98d69a140ec0084cde3b6a5e09aea295 UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingCollider
 dfd33ff9ae3ce8d7ca1f22b475ec2387 UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
 96f3ea9f23b6f08e60710ebb4af49174 Unity.TextMeshPro.dll:TMPro.TMP_SpriteAsset
+486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.MoveFinish
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.GoWorld_inmenu
 7b04addf7b5e974dc0c8c5283da2821a Assembly-CSharp.dll:.Move_Down
 82f9c62731885b8de039ba12c5538052 Assembly-CSharp.dll:.LodingSceneManager
@@ -224,4 +225,4 @@ e04611b8715e6833d2bd7010fc6be10b Unity.TextMeshPro.dll:TMPro.TMP_StyleSheet
 7c80ee3b949c538a10337f1948dc94ee Assembly-CSharp.dll:.PlayerController
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.BlinkingArrow
 f266587783ca6615257e593a1356f1b0 Assembly-CSharp.dll:.StageColliderTop
-486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.MoveFinish
+486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.BoneFinish

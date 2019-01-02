@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Animation\AttackFinish.cs" />
     <Compile Include="Assets\Scripts\Animation\BoneFinish.cs" />
     <Compile Include="Assets\Scripts\Animation\MoveFinish.cs" />
     <Compile Include="Assets\Scripts\Button\Back_inmenu.cs" />

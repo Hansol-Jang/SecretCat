@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float moveTime = 0.1f;
     public Vector3 teleport_position;
     public LayerMask blockingLayer;
+    public LayerMask blockingLayer2;
     public GameObject bone;
     public Sprite bone_sp;
     [HideInInspector] public int dog_die_num = 0; //개 죽인 횟수
@@ -87,11 +88,10 @@ public class PlayerController : MonoBehaviour
                 horizon = 0;
                 vertical = 1;
                 RaycastHit2D hit;
-                Move(horizon, vertical, out hit); // 위로 가라. 단, blocking layer와 만나지 않는다면.
+                Move(horizon, vertical, out hit, 3); // 위로 가라. 단, blocking layer와 만나지 않는다면.
                 if (mv)
                 {
                     is_loc[1] += 1; // Y축 위치 +1
-                    ps_sp.cat_anim.SetInteger("Move", 3);
                     mv_num += 1;
                     moveText.text = mv_num.ToString();
                     GameManager.instance.playerTurn = false; // 플레이어 턴에서 강아지 턴으로 넘어감
@@ -106,11 +106,10 @@ public class PlayerController : MonoBehaviour
                 horizon = 0;
                 vertical = -1;
                 RaycastHit2D hit;
-                Move(horizon, vertical, out hit); // 아래로 가라. 단, blocking layer와 만나지 않는다면.
+                Move(horizon, vertical, out hit, 1); // 아래로 가라. 단, blocking layer와 만나지 않는다면.
                 if (mv)
                 {
                     is_loc[1] -= 1; //Y축 위치 -1
-                    ps_sp.cat_anim.SetInteger("Move", 1);
                     mv_num += 1;
                     moveText.text = mv_num.ToString();
                     GameManager.instance.playerTurn = false;
@@ -125,11 +124,10 @@ public class PlayerController : MonoBehaviour
                 horizon = -1;
                 vertical = 0;
                 RaycastHit2D hit;
-                Move(horizon, vertical, out hit); // 왼쪽으로 가라. 단, blocking layer와 만나지 않는다면.
+                Move(horizon, vertical, out hit, 2); // 왼쪽으로 가라. 단, blocking layer와 만나지 않는다면.
                 if (mv)
                 {
                     is_loc[0] -= 1; //X축 위치 -1
-                    ps_sp.cat_anim.SetInteger("Move", 2);
                     mv_num += 1;
                     moveText.text = mv_num.ToString();
                     GameManager.instance.playerTurn = false;
@@ -144,11 +142,10 @@ public class PlayerController : MonoBehaviour
                 horizon = 1;
                 vertical = 0;
                 RaycastHit2D hit;
-                Move(horizon, vertical, out hit); // 오른쪽으로 가라. 단, blocking layer와 만나지 않는다면.
+                Move(horizon, vertical, out hit, 4); // 오른쪽으로 가라. 단, blocking layer와 만나지 않는다면.
                 if (mv)
                 {
                     is_loc[0] += 1; //X축 위치 +1
-                    ps_sp.cat_anim.SetInteger("Move", 4);
                     mv_num += 1;
                     moveText.text = mv_num.ToString();
                     GameManager.instance.playerTurn = false;
@@ -375,7 +372,7 @@ public class PlayerController : MonoBehaviour
         else return false;
     }
 
-    protected void Move(int xDir, int yDir, out RaycastHit2D hit) //움직임 함수
+    protected void Move(int xDir, int yDir, out RaycastHit2D hit, int anim_dir) //움직임 함수
     {
         Vector2 start = transform.position;
         Vector2 end = start + new Vector2(xDir, yDir);
@@ -385,6 +382,19 @@ public class PlayerController : MonoBehaviour
         boxCollider.enabled = true;
         if (hit.transform == null) //blockingLayer와 만났니?
         {
+            boxCollider.enabled = false;
+            hit = Physics2D.Linecast(start, end, blockingLayer2);
+            boxCollider.enabled = true;
+            if (hit.transform == null)
+            {
+                ps_sp.cat_anim.SetInteger("Move", anim_dir);
+                
+            }
+            else
+            {
+                ps_sp.cat_anim.SetInteger("Attack", anim_dir);
+            }
+
             movement = SmoothMovement(end);
             StartCoroutine(movement);
 
@@ -405,7 +415,7 @@ public class PlayerController : MonoBehaviour
         float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
         while (sqrRemainingDistance > float.Epsilon)
         {
-            Vector3 newPosition = Vector3.MoveTowards(rg2D.position, end, inverseMoveTime * Time.deltaTime);
+            Vector3 newPosition = Vector3.MoveTowards(rg2D.position, end, inverseMoveTime * Time.deltaTime/2.5f);
             rg2D.MovePosition(newPosition);
             sqrRemainingDistance = (transform.position - end).sqrMagnitude;
             yield return null;

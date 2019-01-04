@@ -120,6 +120,7 @@
     <Compile Include="Assets\Scripts\Stage\StageManager.cs" />
     <Compile Include="Assets\Scripts\Stage\StageSelect.cs" />
     <Compile Include="Assets\Scripts\startTouch.cs" />
+    <Compile Include="Assets\Scripts\WorldMap\MapManager.cs" />
     <Compile Include="Assets\Scripts\WorldMap\WorldMove.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/GL/Documents/SecretCat/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

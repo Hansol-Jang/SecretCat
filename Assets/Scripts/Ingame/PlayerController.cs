@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public int bone_num; //남은 뼈 갯수
     [HideInInspector] public int pc_floor; //플레이어 층 위치
     [HideInInspector] public bool mv; //움직였는지 여부
+    [HideInInspector] public int mv_num = 0; //움직인 횟수
     [HideInInspector] public bool moving = false; //움직이고 있는지 여부
     [HideInInspector] public bool boning = false; // 뼈다귀 던질 준비 하고 있니?
     [HideInInspector] public bool boninging = false; //뼈다귀 던져지고 있니?
@@ -26,7 +27,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public int[] is_loc = new int[2]; // 고양이 현재 위치
     [HideInInspector] public SpriteRenderer dog_sr; // 죽인 강아지 스프라이트
 
-    private int mv_num = 0; //움직인 횟수
     private bool mv_up = false; // 위로 가니?
     private bool mv_dw = false; // 아래로 가니?
     private bool mv_le = false; // 왼쪽으로 가니?

@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class Dog : MonoBehaviour {
 
-    public float atkTime = 0f;
+    [HideInInspector] public float atkTime = 0f;
     [HideInInspector] public bool boned = false; //뼈다귀에 매혹되었는지?
     [HideInInspector] public int[] is_loc_dog;// 강아지 현재 위치
+    [HideInInspector] public PlayerController pc; // 플레이어컨트롤러 스크립트
 
     private GameObject board; // 보드판 게임오브젝트
     private BoardTileLoc loctile; // 보드타일록 스크립트
     private GameObject ply; // 플레이어 게임오브젝트
-    private PlayerController pc; // 플레이어컨트롤러 스크립트
     private GameObject dsp; // Dog_Sprite
     private Animator dsp_anim; //Dog_Sprite의 Animator
 

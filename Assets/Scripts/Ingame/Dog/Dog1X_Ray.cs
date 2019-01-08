@@ -7,12 +7,12 @@ public class Dog1X_Ray : MonoBehaviour
 
     public int xDir;
     public int yDir;
+    [HideInInspector] public Vector2 start;
+    [HideInInspector] public Vector2 end;
     public LayerMask blokingLayer1;
     public LayerMask blokingLayer2;
 
     private BoxCollider2D boxCollider;
-    private Vector2 start;
-    private Vector2 end;
     private Vector2 end2;
     private RaycastHit2D hit;
     private RaycastHit2D hit2;

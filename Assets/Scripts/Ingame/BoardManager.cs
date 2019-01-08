@@ -6,14 +6,7 @@ public class BoardManager : MonoBehaviour {
 
     //프리팹 모음 장소(플레이어, 적, 타일 등)
     public GameObject cat;
-    public GameObject dog00;
-    public GameObject dog01;
-    public GameObject dog02;
-    public GameObject dog03;
-    public GameObject dog10;
-    public GameObject dog11;
-    public GameObject dog12;
-    public GameObject dog13;
+    public GameObject[] dog = new GameObject[24];
     public GameObject[] portal = new GameObject[15];
     public GameObject cleartile;
     public GameObject stair1;
@@ -57,58 +50,12 @@ public class BoardManager : MonoBehaviour {
         {
             GameObject dogboard3 = floor[2].transform.GetChild(1).gameObject; //floor3를 불러와
 
-            //나중에 for문으로 만들어보자
-
             for (int i = 0; i < btl.dog_num.Length; i++)
             { //dog_num의 크기만큼 개 유닛을 만든다.
-                if (btl.dog_num[i].dog_loc[4] >= 3)
+                if (btl.dog_num[i].dog_loc[4] == 3)
                 {
-                    if (btl.dog_num[i].dog_loc[0] == 0) //기본 개 타입
-                    {
-                        if (btl.dog_num[i].dog_loc[1] == 0)
-                        { //방향 왼쪽
-                            GameObject instance = Instantiate(dog00, dogboard3.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                        else if (btl.dog_num[i].dog_loc[1] == 1) //방향 위쪽
-                        {
-                            GameObject instance = Instantiate(dog01, dogboard3.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                        else if (btl.dog_num[i].dog_loc[1] == 2) //방향 오른쪽
-                        {
-                            GameObject instance = Instantiate(dog02, dogboard3.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                        else if (btl.dog_num[i].dog_loc[1] == 3) //방향 아래쪽
-                        {
-                            GameObject instance = Instantiate(dog03, dogboard3.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                    }
-                    else if (btl.dog_num[i].dog_loc[0] == 1) //원거리 개 타입
-                    {
-                        if (btl.dog_num[i].dog_loc[1] == 0)
-                        { //방향 왼쪽
-                            GameObject instance = Instantiate(dog10, dogboard3.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                        else if (btl.dog_num[i].dog_loc[1] == 1) //방향 위쪽
-                        {
-                            GameObject instance = Instantiate(dog11, dogboard3.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                        else if (btl.dog_num[i].dog_loc[1] == 2) //방향 오른쪽
-                        {
-                            GameObject instance = Instantiate(dog12, dogboard3.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                        else if (btl.dog_num[i].dog_loc[1] == 3) //방향 아래쪽
-                        {
-                            GameObject instance = Instantiate(dog13, dogboard3.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                    }
+                    GameObject instance = Instantiate(dog[btl.dog_num[i].dog_loc[0]*4 + btl.dog_num[i].dog_loc[1]], dogboard3.transform) as GameObject;
+                    instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
                 }
             }
         }
@@ -119,52 +66,8 @@ public class BoardManager : MonoBehaviour {
             { //dog_num의 크기만큼 개 유닛을 만든다.
                 if (btl.dog_num[i].dog_loc[4] == 2)
                 {
-                    if (btl.dog_num[i].dog_loc[0] == 0) //기본 개 타입
-                    {
-                        if (btl.dog_num[i].dog_loc[1] == 0)
-                        { //방향 왼쪽
-                            GameObject instance = Instantiate(dog00, dogboard2.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                        else if (btl.dog_num[i].dog_loc[1] == 1) //방향 위쪽
-                        {
-                            GameObject instance = Instantiate(dog01, dogboard2.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                        else if (btl.dog_num[i].dog_loc[1] == 2) //방향 오른쪽
-                        {
-                            GameObject instance = Instantiate(dog02, dogboard2.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                        else if (btl.dog_num[i].dog_loc[1] == 3) //방향 아래쪽
-                        {
-                            GameObject instance = Instantiate(dog03, dogboard2.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                    }
-                    else if (btl.dog_num[i].dog_loc[0] == 1) //원거리 개 타입
-                    {
-                        if (btl.dog_num[i].dog_loc[1] == 0)
-                        { //방향 왼쪽
-                            GameObject instance = Instantiate(dog10, dogboard2.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                        else if (btl.dog_num[i].dog_loc[1] == 1) //방향 위쪽
-                        {
-                            GameObject instance = Instantiate(dog11, dogboard2.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                        else if (btl.dog_num[i].dog_loc[1] == 2) //방향 오른쪽
-                        {
-                            GameObject instance = Instantiate(dog12, dogboard2.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                        else if (btl.dog_num[i].dog_loc[1] == 3) //방향 아래쪽
-                        {
-                            GameObject instance = Instantiate(dog13, dogboard2.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                    }
+                    GameObject instance = Instantiate(dog[btl.dog_num[i].dog_loc[0] * 4 + btl.dog_num[i].dog_loc[1]], dogboard2.transform) as GameObject;
+                    instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
                 }
             }
         }
@@ -175,52 +78,8 @@ public class BoardManager : MonoBehaviour {
             { //dog_num의 크기만큼 개 유닛을 만든다.
                 if (btl.dog_num[i].dog_loc[4] == 1)
                 {
-                    if (btl.dog_num[i].dog_loc[0] == 0) //기본 개 타입
-                    {
-                        if (btl.dog_num[i].dog_loc[1] == 0)
-                        { //방향 왼쪽
-                            GameObject instance = Instantiate(dog00, dogboard1.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                        else if (btl.dog_num[i].dog_loc[1] == 1) //방향 위쪽
-                        {
-                            GameObject instance = Instantiate(dog01, dogboard1.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                        else if (btl.dog_num[i].dog_loc[1] == 2) //방향 오른쪽
-                        {
-                            GameObject instance = Instantiate(dog02, dogboard1.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                        else if (btl.dog_num[i].dog_loc[1] == 3) //방향 아래쪽
-                        {
-                            GameObject instance = Instantiate(dog03, dogboard1.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                    }
-                    else if (btl.dog_num[i].dog_loc[0] == 1) //원거리 개 타입
-                    {
-                        if (btl.dog_num[i].dog_loc[1] == 0)
-                        { //방향 왼쪽
-                            GameObject instance = Instantiate(dog10, dogboard1.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                        else if (btl.dog_num[i].dog_loc[1] == 1) //방향 위쪽
-                        {
-                            GameObject instance = Instantiate(dog11, dogboard1.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                        else if (btl.dog_num[i].dog_loc[1] == 2) //방향 오른쪽
-                        {
-                            GameObject instance = Instantiate(dog12, dogboard1.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                        else if (btl.dog_num[i].dog_loc[1] == 3) //방향 아래쪽
-                        {
-                            GameObject instance = Instantiate(dog13, dogboard1.transform) as GameObject;
-                            instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
-                        }
-                    }
+                    GameObject instance = Instantiate(dog[btl.dog_num[i].dog_loc[0] * 4 + btl.dog_num[i].dog_loc[1]], dogboard1.transform) as GameObject;
+                    instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
                 }
             }
         }

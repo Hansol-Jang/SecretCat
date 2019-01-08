@@ -77,6 +77,7 @@
     <Compile Include="Assets\Scripts\Button\Move_Up.cs" />
     <Compile Include="Assets\Scripts\Button\NextStage.cs" />
     <Compile Include="Assets\Scripts\Button\NoButton.cs" />
+    <Compile Include="Assets\Scripts\Button\NonSwipeArea.cs" />
     <Compile Include="Assets\Scripts\Button\Restart_inmenu.cs" />
     <Compile Include="Assets\Scripts\Button\SeeButton.cs" />
     <Compile Include="Assets\Scripts\Button\YesButton.cs" />

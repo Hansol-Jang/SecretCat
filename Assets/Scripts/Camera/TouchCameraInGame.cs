@@ -11,7 +11,7 @@ public class TouchCameraInGame : MonoBehaviour
     public GameObject Collider_Up; //가장 위쪽
     public GameObject Collider_Down; //가장 아래쪽
 
-    public float orthoZoomSpeed = 0.0000001f; // The rate of change of the orthographic size in orthographic mode.
+    public float orthoZoomSpeed; // The rate of change of the orthographic size in orthographic mode.
 
     Camera cam; //카메라
     Vector2 oldTouchPosition; //기존 포지션
@@ -83,7 +83,7 @@ public class TouchCameraInGame : MonoBehaviour
 
                 // ... change the orthographic size based on the change in distance between the touches.
                 cam.orthographicSize += deltaMagnitudeDiff * orthoZoomSpeed;
-                cam.transform.localScale += new Vector3(deltaMagnitudeDiff * orthoZoomSpeed / 5, deltaMagnitudeDiff * orthoZoomSpeed / 5, 1f);
+                cam.transform.localScale += new Vector3(deltaMagnitudeDiff * orthoZoomSpeed / 5, deltaMagnitudeDiff * orthoZoomSpeed / 5, 0f);
 
                 // Make sure the orthographic size never drops below zero.
                 cam.orthographicSize = Mathf.Max(cam.orthographicSize, 2.5f);

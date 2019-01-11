@@ -9,6 +9,8 @@ public class TouchCamera : MonoBehaviour {
     public GameObject Collider_Up; //가장 위쪽
     public GameObject Collider_Down; //가장 아래쪽
 
+    public float orthoZoomSpeed; // The rate of change of the orthographic size in orthographic mode.
+
     Camera cam; //카메라
     Vector2 oldTouchPosition; //기존 포지션
 
@@ -53,5 +55,35 @@ public class TouchCamera : MonoBehaviour {
                     }
                 }
             }
+        else if (Input.touchCount == 2)
+        {
+            if (!GameManager.instance.is_menu)
+            {
+                // Store both touches.
+                Touch touchZero = Input.GetTouch(0);
+                Touch touchOne = Input.GetTouch(1);
+
+                // Find the position in the previous frame of each touch.
+                Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
+                Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+
+                // Find the magnitude of the vector (the distance) between the touches in each frame.
+                float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude;
+                float touchDeltaMag = (touchZero.position - touchOne.position).magnitude;
+
+                // Find the difference in the distances between each frame.
+                float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
+
+                // ... change the orthographic size based on the change in distance between the touches.
+                cam.orthographicSize += deltaMagnitudeDiff * orthoZoomSpeed;
+                transform.localScale += new Vector3(deltaMagnitudeDiff * orthoZoomSpeed * 3.54f, deltaMagnitudeDiff * orthoZoomSpeed * 2, 0f);
+
+                // Make sure the orthographic size never drops below zero.
+                cam.orthographicSize = Mathf.Max(cam.orthographicSize, 5.0f);
+                transform.localScale = new Vector3(Mathf.Max(transform.localScale.x, 17.77f), Mathf.Max(transform.localScale.y, 10f), 1f);
+                cam.orthographicSize = Mathf.Min(cam.orthographicSize, 7.0f);
+                transform.localScale = new Vector3(Mathf.Min(transform.localScale.x, 24.878f), Mathf.Min(transform.localScale.y, 14f), 1f);
+            }
+        }
     }
 }

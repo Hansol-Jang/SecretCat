@@ -46,6 +46,7 @@ public class BoardManager : MonoBehaviour {
         GameObject player_instance = Instantiate(cat) as GameObject; //플레이어 생성
         player_instance.name = "Player";
         player_instance.transform.position += new Vector3(btl.player_loc[0], btl.player_loc[1], 0f); //시작 위치로 플레이어를 옮긴다.
+        player_instance.transform.GetChild(0).transform.localPosition += new Vector3(0f, 0f, btl.player_loc[1]-0.5f);
         if (btl.floorNumber >= 3) //3층 이상 있는 경우
         {
             GameObject dogboard3 = floor[2].transform.GetChild(1).gameObject; //floor3를 불러와

@@ -11,8 +11,8 @@ public class WorldMove : MonoBehaviour {
     public Sprite worldTrue; //월드 활성화 스프라이트
 
     private int star_number = 0; //월드에서 얻은 별 갯수
-    public float timer1;
-    public float timer2;
+    private float timer1;
+    private float timer2;
 
     // Use this for initialization
     void Start () {

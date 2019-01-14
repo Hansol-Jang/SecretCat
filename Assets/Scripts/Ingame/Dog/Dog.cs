@@ -45,6 +45,7 @@ public class Dog : MonoBehaviour {
         if (boned)
         {
             dsp_anim.SetBool("anim_bone", true);
+            dsp.transform.localPosition = new Vector3(-0.074f, 0.269f, 0f);
         }
     }
 }

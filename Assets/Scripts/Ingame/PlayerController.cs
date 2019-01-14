@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 {
     public float moveTime = 0.1f;
     public Vector3 teleport_position;
+    public Vector3 sp_teleport_position;
     public LayerMask blockingLayer;
     public LayerMask blockingLayer2;
     public GameObject bone;
@@ -79,6 +80,7 @@ public class PlayerController : MonoBehaviour
         {
             StopCoroutine(movement);
             transform.position = teleport_position;
+            sp.transform.localPosition = sp_teleport_position;
             por = false;
         }
         if (GameManager.instance.playerTurn == true && !cat_death && !BM_SC.is_clear) // 플레이어 턴이라면
@@ -395,7 +397,7 @@ public class PlayerController : MonoBehaviour
                 ps_sp.cat_anim.SetInteger("Attack", anim_dir);
             }
 
-            movement = SmoothMovement(end);
+            movement = SmoothMovement(end, yDir);
             StartCoroutine(movement);
 
             mv = true;
@@ -409,8 +411,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    protected IEnumerator SmoothMovement(Vector3 end)
+    protected IEnumerator SmoothMovement(Vector3 end,int yDir)
     {
+        if (yDir == -1)
+        {
+            sp.transform.localPosition += new Vector3(0f, 0f, -1f);
+        }
         boxCollider.enabled = false; //이동 시작할 때 박스컬라이더 없앰 --> 다 이동해야 상호작용하기 위해서
         float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
         while (sqrRemainingDistance > float.Epsilon)
@@ -421,6 +427,10 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         boxCollider.enabled = true; //이동 끝날 때 박스컬라이더 다시 생김
+        if (yDir == 1)
+        {
+            sp.transform.localPosition += new Vector3(0f, 0f, 1f);
+        }
         moving = false;
     }
 

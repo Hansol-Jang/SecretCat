@@ -111,6 +111,7 @@ public class Stair : MonoBehaviour {
                         break;
                 }
                 pl_con.teleport_position = pl.transform.position;
+                pl_con.sp_teleport_position = pl.transform.GetChild(0).transform.localPosition;
                 pl_con.re_portal = true;
                 pl_con.por = true;
                 pl_con.pc_floor += temp;

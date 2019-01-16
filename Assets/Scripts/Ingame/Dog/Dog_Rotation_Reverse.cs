@@ -23,8 +23,10 @@ public class Dog_Rotation_Reverse : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (pc.moving)
-        {
+        Rotate_Reverse();
+    }
+
+    void Rotate_Reverse(){
             loc = origin_loc + pc.mv_num;
             switch (loc % 4)
             {
@@ -64,7 +66,6 @@ public class Dog_Rotation_Reverse : MonoBehaviour
                 default:
                     break;
             }
-        }
     }
 }
 

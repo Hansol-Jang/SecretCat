@@ -113,7 +113,7 @@ public class Tutorial_Process : MonoBehaviour {
                         break;
                 }
                 break;
-            case 11:
+            case 15:
                 switch (tutorial_process)
                 {
                     case 1:
@@ -133,7 +133,7 @@ public class Tutorial_Process : MonoBehaviour {
                         break;
                 }
                 break;
-            case 12:
+            case 17:
                 switch (tutorial_process)
                 {
                     case 1:

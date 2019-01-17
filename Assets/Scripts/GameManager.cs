@@ -18,10 +18,10 @@ public class GameManager : MonoBehaviour {
     public List<Stair> stairs; //Stair의 리스트
     public static GameManager instance = null;
 
-    [HideInInspector] public int[] stage_score = new int[15]; //최대 점수 --> 스테이지 늘어날 때마다 늘려줘야함
-    [HideInInspector] public int[] stage_star = new int[15]; //스테이지별 별 --> 스테이지 늘어날 때마다 늘려줘야함
-    [HideInInspector] public bool[] world_clear = new bool[3]; //월드 클리어 모아둔 배열 --> 월드 늘어날 때마다 늘려줘야함
-    [HideInInspector] public bool[] stage_clear = new bool[15]; //스테이지 클리어 모아둔 배열 --> 스테이지 늘어날 때마다 늘려줘야함
+    public int[] stage_score = new int[27]; //최대 점수 --> 스테이지 늘어날 때마다 늘려줘야함
+    public int[] stage_star = new int[27]; //스테이지별 별 --> 스테이지 늘어날 때마다 늘려줘야함
+    public bool[] world_clear = new bool[4]; //월드 클리어 모아둔 배열 --> 월드 늘어날 때마다 늘려줘야함
+    public bool[] stage_clear = new bool[27]; //스테이지 클리어 모아둔 배열 --> 스테이지 늘어날 때마다 늘려줘야함
     [HideInInspector] public bool playerTurn = true; //플레이어 턴?
     [HideInInspector] public bool dogTurn; //강아지 턴?
     
@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour {
         pc.ClearSP();
         pc.Scoring();
         MC.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.SetActive(true); //클리어 UI 보이기
-        if (level == 5 || level == 10 || level == 15) // 각 월드 마지막 스테이지일 시 --> 월드에 스테이지 늘어날 때마다 늘려줘야 함
+        if (level == 5 || level == 14 || level == 22 || level == 25) // 각 월드 마지막 스테이지일 시 --> 월드에 스테이지 늘어날 때마다 늘려줘야 함
         {
             world_clear[world_level] = true;
             MC.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.transform.GetChild(5).gameObject.SetActive(false); //다음 미션 false

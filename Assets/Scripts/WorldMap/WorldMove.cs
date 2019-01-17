@@ -55,6 +55,7 @@ public class WorldMove : MonoBehaviour {
                     if (world == 0) //world 0인 경우
                     {
                         GameManager.instance.world_level = world;
+                        GameManager.instance.level = world_start_number;
                         GameManager.instance.sv_start_number = world_start_number;
                         GameManager.instance.sv_stage_number = world_stage_number;
                         LodingSceneManager.LoadScene("stageSelect"); //스테이지 선택 씬으로
@@ -64,6 +65,7 @@ public class WorldMove : MonoBehaviour {
                         if (GameManager.instance.world_clear[world - 1])
                         {
                             GameManager.instance.world_level = world;
+                            GameManager.instance.level = world_start_number;
                             GameManager.instance.sv_start_number = world_start_number;
                             GameManager.instance.sv_stage_number = world_stage_number;
                             LodingSceneManager.LoadScene("stageSelect"); //스테이지 선택 씬으로

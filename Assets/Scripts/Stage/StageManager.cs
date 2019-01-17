@@ -2,19 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class CMLOC
+{
+    public float[] cm_x;
+
+}
+
 public class StageManager : MonoBehaviour
 {
     public int touchStage;
     public TouchCamera_X TCX;
     public GameObject CM;
 
-    public float[] cm_x;
+    public CMLOC[] cm_world;
 
     // Use this for initialization
     void Start()
     {
         Setup_ST(GameManager.instance.world_level);
-        CM.transform.position = new Vector3(cm_x[GameManager.instance.level- GameManager.instance.sv_start_number],0f,0f);
+        CM.transform.position = new Vector3(cm_world[GameManager.instance.world_level].cm_x[GameManager.instance.level- GameManager.instance.sv_start_number],0f,0f);
     }
 
     void StageSetup(int w)

@@ -298,20 +298,20 @@ public class BoardManager : MonoBehaviour {
     }
 
     public void SetScene(int level) { //보드 만드는 함수
-        if (level == 1 || level == 2 || level == 6 || level == 7 || level == 15 || level == 17) //--> 튜토리얼 늘어날 때마다 추가
-        {
-            Tutorial(level);
-        }
         BoardSetup(level);
-        if (level == 1 || level == 2 || level == 6 || level == 7 || level == 15 || level == 17) //--> 튜토리얼 늘어날 때마다 추가
-        {
-            Tutorial_Move();
-        }
         UnitSetup();
         PortalSetup();
         StairSetup();
         ClearTileSetup();
         FloorDisplay();
         CameraSetting();
+        if (level == 1 || level == 2 || level == 6 || level == 7 || level == 15 || level == 17) //--> 튜토리얼 늘어날 때마다 추가
+        {
+            Tutorial(level);
+        }
+        if (level == 1 || level == 2 || level == 6 || level == 7 || level == 15 || level == 17) //--> 튜토리얼 늘어날 때마다 추가
+        {
+            Tutorial_Move();
+        }
     }
 }

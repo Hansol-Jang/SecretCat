@@ -5,6 +5,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
+public class LogData
+{
+    public int[] log_pl_loc = new int[3]; //0 : X축 좌표 1 : Y축 좌표 2 : 층
+    public int[] log_die_dog_loc = new int[2]; //0 : 층, 1 : 자식 인덱스
+    public int[] log_bone_dog_loc = new int[2]; //0 : 층, 1 : 자식 인덱스
+    public int log_cat_dir; //방향 인덱스
+    public int log_mv_num; //이동거리
+    public int log_bone_num; //뼈다귀 갯수
+    public int log_dog_die_num; //개 죽인 횟수
+    public bool log_re_portal; //다시 포탈을 탈 수 있는가?
+    public bool log_dog_die; //개가 죽었는가?
+    public bool log_dog_bone; //개가 매혹당했는가?
+}
+
 public class PlayerController : MonoBehaviour
 {
     public float moveTime = 0.1f;
@@ -14,6 +29,8 @@ public class PlayerController : MonoBehaviour
     public LayerMask blockingLayer2;
     public GameObject bone;
     public Sprite bone_sp;
+    public List<LogData> log = new List<LogData>();
+    [HideInInspector] public int cat_dir = 1; //방향 인덱스
     [HideInInspector] public int dog_die_num = 0; //개 죽인 횟수
     [HideInInspector] public int bone_num; //남은 뼈 갯수
     [HideInInspector] public int pc_floor; //플레이어 층 위치
@@ -40,6 +57,9 @@ public class PlayerController : MonoBehaviour
     private GameObject board; // 보드판 게임오브젝트
     private GameObject sp; // Player_Sprite
     private GameObject BM; //보드매니저 게임오브젝트
+    private GameObject fl1; //Floor1
+    private GameObject fl2; //Floor2
+    private GameObject fl3; //Floor3
     private BoardManager BM_SC; //보드매니저 스크립트
     private BoardTileLoc loctile; // 보드타일록 스크립트
     private BoxCollider2D boxCollider;
@@ -58,6 +78,9 @@ public class PlayerController : MonoBehaviour
         rg2D = GetComponent<Rigidbody2D>();
         inverseMoveTime = 1f / moveTime;
         MC = GameObject.Find("Main Camera");
+        fl1 = MC.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(8).gameObject.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject;
+        fl2 = MC.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(8).gameObject.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject;
+        fl3 = MC.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(8).gameObject.transform.GetChild(2).gameObject.transform.GetChild(1).gameObject;
         board = GameObject.Find("Board");
         BM = GameObject.Find("BoardManager");
         BM_SC = BM.GetComponent<BoardManager>();
@@ -71,6 +94,7 @@ public class PlayerController : MonoBehaviour
         boneText.text = bone_num.ToString();
         moveText.text = mv_num.ToString();
         is_loc = loctile.player_loc; // 시작 위치를 현재 위치에 저장
+        AddLogData();
     }
 
     // Update is called once per frame
@@ -82,6 +106,8 @@ public class PlayerController : MonoBehaviour
             transform.position = teleport_position;
             sp.transform.localPosition = sp_teleport_position;
             por = false;
+            log.RemoveAt(log.Count - 1);
+            AddLogData();
         }
         if (GameManager.instance.playerTurn == true && !cat_death && !BM_SC.is_clear) // 플레이어 턴이라면
         {
@@ -93,12 +119,15 @@ public class PlayerController : MonoBehaviour
                 Move(horizon, vertical, out hit, 3); // 위로 가라. 단, blocking layer와 만나지 않는다면.
                 if (mv)
                 {
+                    cat_dir = 3;
                     is_loc[1] += 1; // Y축 위치 +1
                     mv_num += 1;
                     moveText.text = mv_num.ToString();
                     GameManager.instance.playerTurn = false; // 플레이어 턴에서 강아지 턴으로 넘어감
                     GameManager.instance.dogTurn = true;
                     re_portal = false; //이동할 때, re_portal 바뀜
+                    AddLogData();
+                    ps_sp.cat_anim.SetInteger("Idle_Dir", cat_dir);
                 }
                 else moving = false;
             }
@@ -111,12 +140,15 @@ public class PlayerController : MonoBehaviour
                 Move(horizon, vertical, out hit, 1); // 아래로 가라. 단, blocking layer와 만나지 않는다면.
                 if (mv)
                 {
+                    cat_dir = 1;
                     is_loc[1] -= 1; //Y축 위치 -1
                     mv_num += 1;
                     moveText.text = mv_num.ToString();
                     GameManager.instance.playerTurn = false;
                     GameManager.instance.dogTurn = true;
                     re_portal = false;
+                    AddLogData();
+                    ps_sp.cat_anim.SetInteger("Idle_Dir", cat_dir);
                 }
                 else moving = false;
             }
@@ -129,12 +161,15 @@ public class PlayerController : MonoBehaviour
                 Move(horizon, vertical, out hit, 2); // 왼쪽으로 가라. 단, blocking layer와 만나지 않는다면.
                 if (mv)
                 {
+                    cat_dir = 2;
                     is_loc[0] -= 1; //X축 위치 -1
                     mv_num += 1;
                     moveText.text = mv_num.ToString();
                     GameManager.instance.playerTurn = false;
                     GameManager.instance.dogTurn = true;
                     re_portal = false;
+                    AddLogData();
+                    ps_sp.cat_anim.SetInteger("Idle_Dir", cat_dir);
                 }
                 else moving = false;
             }
@@ -147,12 +182,15 @@ public class PlayerController : MonoBehaviour
                 Move(horizon, vertical, out hit, 4); // 오른쪽으로 가라. 단, blocking layer와 만나지 않는다면.
                 if (mv)
                 {
+                    cat_dir = 4;
                     is_loc[0] += 1; //X축 위치 +1
                     mv_num += 1;
                     moveText.text = mv_num.ToString();
                     GameManager.instance.playerTurn = false;
                     GameManager.instance.dogTurn = true;
                     re_portal = false;
+                    AddLogData();
+                    ps_sp.cat_anim.SetInteger("Idle_Dir", cat_dir);
                 }
                 else moving = false;
             }
@@ -267,45 +305,57 @@ public class PlayerController : MonoBehaviour
 
     public void Bone_Up() //뼈다귀 위로 던지기
     {
+        cat_dir = 3;
         boninging = true;
         ps_sp.cat_anim.SetInteger("Boning", 3);
         GameObject bone_in = GameObject.Find("Bone");
         bone_in.GetComponent<SpriteRenderer>().sprite = bone_sp;
         bone_num -= 1;
         boneText.text = bone_num.ToString();
+        AddLogData();
+        ps_sp.cat_anim.SetInteger("Idle_Dir", cat_dir);
         StartCoroutine(SmoothBone(0, 1, 0f, 1f, 0f, 0f, 0.05f, 0.05f, 0.0030f, 0.0030f, bone_in.transform.position + new Vector3(0f, 1f, 0f)));
     }
 
     public void Bone_Down() //뼈다귀 아래로 던지기
     {
+        cat_dir = 1;
         boninging = true;
         ps_sp.cat_anim.SetInteger("Boning", 1);
         GameObject bone_in = GameObject.Find("Bone");
         bone_in.GetComponent<SpriteRenderer>().sprite = bone_sp;
         bone_num -= 1;
         boneText.text = bone_num.ToString();
+        AddLogData();
+        ps_sp.cat_anim.SetInteger("Idle_Dir", cat_dir);
         StartCoroutine(SmoothBone(0, -1, 0f, -1f, 0f, 0f, 0.05f, 0.05f, 0.0030f, 0.0030f, bone_in.transform.position + new Vector3(0f, -1f, 0f)));
     }
 
     public void Bone_Left() //뼈다귀 왼쪽으로 던지기
     {
+        cat_dir = 2;
         boninging = true;
         ps_sp.cat_anim.SetInteger("Boning", 2);
         GameObject bone_in = GameObject.Find("Bone");
         bone_in.GetComponent<SpriteRenderer>().sprite = bone_sp;
         bone_num -= 1;
         boneText.text = bone_num.ToString();
+        AddLogData();
+        ps_sp.cat_anim.SetInteger("Idle_Dir", cat_dir);
         StartCoroutine(SmoothBone(-1, 0, -1f, 1f, 0f, 0.075f, 0f, 0f, 0f, 0f, bone_in.transform.position + new Vector3(-1f, 0f, 0f)));
     }
 
     public void Bone_Right() //뼈다귀 오른쪽으로 던지기
     {
+        cat_dir = 4;
         boninging = true;
         ps_sp.cat_anim.SetInteger("Boning", 4);
         GameObject bone_in = GameObject.Find("Bone");
         bone_in.GetComponent<SpriteRenderer>().sprite = bone_sp;
         bone_num -= 1;
         boneText.text = bone_num.ToString();
+        AddLogData();
+        ps_sp.cat_anim.SetInteger("Idle_Dir", cat_dir);
         StartCoroutine(SmoothBone(1, 0, 1f, 1f, 0f, 0.075f, 0f, 0f, 0f, 0f, bone_in.transform.position + new Vector3(1f,0f,0f)));
     }
 
@@ -357,6 +407,146 @@ public class PlayerController : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+
+    public void AddLogData() //로그 데이터 만들기
+    {
+        LogData log_data = new LogData(); //로그데이터 작성
+        log_data.log_pl_loc[0] = is_loc[0];
+        log_data.log_pl_loc[1] = is_loc[1];
+        log_data.log_cat_dir = cat_dir;
+        log_data.log_pl_loc[2] = pc_floor; //위치 저장
+        log_data.log_mv_num = mv_num; //이동 거리 저장
+        log_data.log_bone_num = bone_num; //남은 뼈다귀 저장
+        log_data.log_dog_die_num = dog_die_num; //죽인 강아지 숫자 저장
+        log_data.log_re_portal = re_portal; //다시 포탈탈 수 있는지 여부 저장
+        log_data.log_dog_die = false; //강아지가 죽었나?
+        log_data.log_dog_bone = false; //강아지가 매혹당했나?
+        AddLogDataToList(log_data); //로그데이터에 저장
+    }
+
+    private void AddLogDataToList(LogData logdata) //리스트에 저장
+    {
+        log.Add(logdata);
+    }
+
+    public void ReturnAction() //직전 행동으로 돌아가는 기능
+    {
+        if (log.Count > 1)
+        {
+            //직전 행동의 변수 불러옴
+            is_loc[0] = log[log.Count - 2].log_pl_loc[0];
+            is_loc[1] = log[log.Count - 2].log_pl_loc[1];
+            cat_dir = log[log.Count - 2].log_cat_dir;
+            pc_floor = log[log.Count - 2].log_pl_loc[2];
+            BM_SC.is_floor = log[log.Count - 2].log_pl_loc[2];
+            mv_num = log[log.Count - 2].log_mv_num;
+            bone_num = log[log.Count - 2].log_bone_num;
+            dog_die_num = log[log.Count - 2].log_dog_die_num;
+            re_portal = log[log.Count - 2].log_re_portal;
+
+            //직전 행동으로 모든 걸 바꿈
+            transform.position = new Vector3(-3.5f + is_loc[0], -4.5f + is_loc[1], 0f); //고양이 위치
+            transform.GetChild(0).transform.localPosition = new Vector3(0f, 0.3f, is_loc[1] - 0.5f); //고양이 원근감
+            if (log[log.Count - 1].log_dog_die) //죽은 개 살리기
+            {
+                board.transform.GetChild(log[log.Count - 1].log_die_dog_loc[0] - 1).GetChild(1).GetChild(log[log.Count - 1].log_die_dog_loc[1]).gameObject.SetActive(true);
+            }
+            if(log[log.Count - 1].log_dog_bone) //매혹당한 개 풀기
+            {
+                board.transform.GetChild(log[log.Count - 1].log_bone_dog_loc[0] - 1).GetChild(1).GetChild(log[log.Count - 1].log_bone_dog_loc[1]).gameObject.GetComponent<Dog>().boned = false;
+                board.transform.GetChild(log[log.Count - 1].log_bone_dog_loc[0] - 1).GetChild(1).GetChild(log[log.Count - 1].log_bone_dog_loc[1]).GetChild(1).gameObject.tag = "AttackRange";
+                board.transform.GetChild(log[log.Count - 1].log_bone_dog_loc[0] - 1).GetChild(1).GetChild(log[log.Count - 1].log_bone_dog_loc[1]).gameObject.GetComponent<Dog>().dsp_anim.SetBool("anim_bone", false);
+                board.transform.GetChild(log[log.Count - 1].log_bone_dog_loc[0] - 1).GetChild(1).GetChild(log[log.Count - 1].log_bone_dog_loc[1]).gameObject.GetComponent<Dog>().dsp.transform.localPosition = board.transform.GetChild(log[log.Count - 1].log_bone_dog_loc[0] - 1).GetChild(1).GetChild(log[log.Count - 1].log_bone_dog_loc[1]).gameObject.GetComponent<Dog>().dsp_ve3;
+            }
+            sp.SetActive(true); //고양이 스프라이트 활성화
+            ps_sp.cat_anim.SetInteger("Idle_Dir", cat_dir); //고양이 방향 설정
+
+            //층 보이기
+                switch (pc_floor)
+                {
+                    case 1:
+                        switch (loctile.floorNumber)
+                        {
+                            case 1:
+                                board.transform.GetChild(0).gameObject.SetActive(true);
+                                break;
+                            case 2:
+                                board.transform.GetChild(0).gameObject.SetActive(true);
+                                board.transform.GetChild(1).gameObject.SetActive(false);
+                                break;
+                            case 3:
+                                board.transform.GetChild(0).gameObject.SetActive(true);
+                                board.transform.GetChild(1).gameObject.SetActive(false);
+                                board.transform.GetChild(2).gameObject.SetActive(false);
+                                break;
+                            default:
+                                break;
+                        }
+
+                        int floor1_dog_list = board.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.transform.childCount;
+                        for (int i = 0; i < floor1_dog_list; i++)
+                        {
+                            board.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.transform.GetChild(i).gameObject.GetComponent<Dog>().Boned();
+                        }
+                        fl1.SetActive(true);
+                        fl2.SetActive(false);
+                        fl3.SetActive(false);
+                        break;
+                    case 2:
+                        switch (loctile.floorNumber)
+                        {
+                            case 2:
+                                board.transform.GetChild(0).gameObject.SetActive(false);
+                                board.transform.GetChild(1).gameObject.SetActive(true);
+                                break;
+                            case 3:
+                                board.transform.GetChild(0).gameObject.SetActive(false);
+                                board.transform.GetChild(1).gameObject.SetActive(true);
+                                board.transform.GetChild(2).gameObject.SetActive(false);
+                                break;
+                            default:
+                                break;
+                        }
+
+                        int floor2_dog_list = board.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.transform.childCount;
+                        for (int i = 0; i < floor2_dog_list; i++)
+                        {
+                            board.transform.GetChild(1).gameObject.transform.GetChild(1).gameObject.transform.GetChild(i).gameObject.GetComponent<Dog>().Boned();
+                        }
+                        fl1.SetActive(false);
+                        fl2.SetActive(true);
+                        fl3.SetActive(false);
+                        break;
+                    case 3:
+                        switch (loctile.floorNumber)
+                        {
+                            case 3:
+                                board.transform.GetChild(0).gameObject.SetActive(false);
+                                board.transform.GetChild(1).gameObject.SetActive(false);
+                                board.transform.GetChild(2).gameObject.SetActive(true);
+                                break;
+                            default:
+                                break;
+                        }
+                        int floor3_dog_list = board.transform.GetChild(2).gameObject.transform.GetChild(1).gameObject.transform.childCount;
+                        for (int i = 0; i < floor3_dog_list; i++)
+                        {
+                            board.transform.GetChild(2).gameObject.transform.GetChild(1).gameObject.transform.GetChild(i).gameObject.GetComponent<Dog>().Boned();
+                        }
+                        fl1.SetActive(false);
+                        fl2.SetActive(false);
+                        fl3.SetActive(true);
+                        break;
+                    default:
+                        break;
+                }
+            moveText.text = mv_num.ToString(); //이동 거리 텍스트 바꿈
+            boneText.text = bone_num.ToString(); //남은 뼈다귀 텍스트 바꿈
+
+            //리스트에서 마지막 요소들 삭제
+            log.RemoveAt(log.Count - 1);
         }
     }
 
@@ -456,6 +646,9 @@ public class PlayerController : MonoBehaviour
         {
             if (GameManager.instance.dogs[i].is_loc_dog[0] == is_loc[0] + x && GameManager.instance.dogs[i].is_loc_dog[1] == is_loc[1] + y && GameManager.instance.dogs[i].is_loc_dog[2] == pc_floor)
             {
+                log[log.Count - 1].log_dog_bone = true;
+                log[log.Count - 1].log_bone_dog_loc[0] = GameManager.instance.dogs[i].is_loc_dog[2];
+                log[log.Count - 1].log_bone_dog_loc[1] = GameManager.instance.dogs[i].transform.GetSiblingIndex();
                 GameManager.instance.dogs[i].boned = true;
                 GameManager.instance.dogs[i].gameObject.transform.GetChild(1).gameObject.tag = "BonedRange";
                 GameManager.instance.dogs[i].Boned();

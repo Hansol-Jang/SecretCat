@@ -107,6 +107,7 @@
     <Compile Include="Assets\Scripts\Ingame\PlayerSprite.cs" />
     <Compile Include="Assets\Scripts\Ingame\Portal.cs" />
     <Compile Include="Assets\Scripts\Ingame\Restart.cs" />
+    <Compile Include="Assets\Scripts\Ingame\ReturnAction.cs" />
     <Compile Include="Assets\Scripts\Ingame\Stair.cs" />
     <Compile Include="Assets\Scripts\Ingame\Tutorial\Tutorial_Button.cs" />
     <Compile Include="Assets\Scripts\Ingame\Tutorial\Tutorial_Process.cs" />

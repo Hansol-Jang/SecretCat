@@ -1,15 +1,16 @@
 ﻿// Just add this script to your camera. It doesn't need any configuration.
 
 using UnityEngine;
+using UnityEngine.UI;
+using Cinemachine;
 
 public class TouchCameraInGame : MonoBehaviour
 {
     public bool nonbutton = false;
 
-    public GameObject Collider_Left; //가장 왼쪽
-    public GameObject Collider_Right; //가장 오른쪽
-    public GameObject Collider_Up; //가장 위쪽
-    public GameObject Collider_Down; //가장 아래쪽
+    public CinemachineVirtualCamera vcam;
+    public CinemachineFramingTransposer vcam_com;
+    public GameObject pl_cam; //플레이어 카메라 게임오브젝트
 
     public float orthoZoomSpeed; // The rate of change of the orthographic size in orthographic mode.
 
@@ -19,6 +20,7 @@ public class TouchCameraInGame : MonoBehaviour
     private void Awake()
     {
         cam = transform.GetComponent<Camera>();
+        vcam_com = vcam.GetCinemachineComponent<CinemachineFramingTransposer>();
         oldTouchPosition = new Vector2(-9999f, -9999f);
     }
 
@@ -35,28 +37,16 @@ public class TouchCameraInGame : MonoBehaviour
                 if (oldTouchPosition == new Vector2(-9999f, -9999f))
                 {
                     oldTouchPosition = Input.GetTouch(0).position; //처음에는 터치한 곳을 받아온다
+                    pl_cam.transform.position = transform.position;
                 }
                 else
                 {
                     Vector2 newTouchPosition = Input.GetTouch(0).position;
                     if ((newTouchPosition - oldTouchPosition).sqrMagnitude < 15000f)
                     { //처음 터치한 곳과 터치를 움직인 곳의 거리가 얼마 차이 안 날때
-                        if (oldTouchPosition.x >= newTouchPosition.x && !Collider_Right.GetComponent<StageColliderRight>().right) //오른쪽으로 스와이프했을 경우 + 가장 오른쪽이 아닌 경우
-                        {
-                            transform.position += transform.TransformDirection(((oldTouchPosition.x - newTouchPosition.x) * cam.orthographicSize / cam.pixelHeight * 2f), 0f, 0f); //카메라 달린 오브젝트가 x축으로 움직인다.
-                        }
-                        if ((oldTouchPosition.x < newTouchPosition.x) && !Collider_Left.GetComponent<StageColliderLeft>().left) //왼쪽으로 스와이프했을 경우 + 가장 왼쪽이 아닌 경우
-                        {
-                            transform.position += transform.TransformDirection(((oldTouchPosition.x - newTouchPosition.x) * cam.orthographicSize / cam.pixelHeight * 2f), 0f, 0f); //카메라 달린 오브젝트가 x축으로 움직인다.
-                        }
-                        if (oldTouchPosition.y >= newTouchPosition.y && !Collider_Up.GetComponent<StageColliderTop>().top) //위쪽으로 스와이프했을 경우 + 가장 위쪽이 아닌 경우
-                        {
-                            transform.position += transform.TransformDirection(0f, ((oldTouchPosition.y - newTouchPosition.y) * cam.orthographicSize / cam.pixelHeight * 2f), 0f); //카메라 달린 오브젝트가 y축으로 움직인다.
-                        }
-                        if (oldTouchPosition.y < newTouchPosition.y && !Collider_Down.GetComponent<StageColliderBottom>().bot) //아래쪽으로 스와이프했을 경우 + 가장 아래쪽이 아닌 경우
-                        {
-                            transform.position += transform.TransformDirection(0f, ((oldTouchPosition.y - newTouchPosition.y) * cam.orthographicSize / cam.pixelHeight * 2f), 0f); //카메라 달린 오브젝트가 y축으로 움직인다.
-                        }
+                        vcam_com.m_DeadZoneWidth = 0f;
+                        vcam_com.m_DeadZoneHeight = 0f;
+                        pl_cam.transform.localPosition += transform.TransformDirection(((oldTouchPosition.x - newTouchPosition.x) * cam.orthographicSize / cam.pixelHeight * 2f), ((oldTouchPosition.y - newTouchPosition.y) * cam.orthographicSize / cam.pixelHeight * 2f), 0f);
                     }
                     oldTouchPosition = newTouchPosition; //터치 정보를 조금씩 옮기기
                 }
@@ -82,14 +72,14 @@ public class TouchCameraInGame : MonoBehaviour
                 float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
                 // ... change the orthographic size based on the change in distance between the touches.
-                cam.orthographicSize += deltaMagnitudeDiff * orthoZoomSpeed;
+                vcam.m_Lens.OrthographicSize += deltaMagnitudeDiff * orthoZoomSpeed;
                 cam.transform.localScale += new Vector3(deltaMagnitudeDiff * orthoZoomSpeed / 5, deltaMagnitudeDiff * orthoZoomSpeed / 5, 0f);
 
                 // Make sure the orthographic size never drops below zero.
-                cam.orthographicSize = Mathf.Max(cam.orthographicSize, 2.5f);
+                vcam.m_Lens.OrthographicSize = Mathf.Max(vcam.m_Lens.OrthographicSize, 2.5f);
                 cam.transform.localScale = new Vector3(Mathf.Max(cam.transform.localScale.x, 0.5f), Mathf.Max(cam.transform.localScale.y, 0.5f), 1f);
-                cam.orthographicSize = Mathf.Min(cam.orthographicSize, 5.0f);
-                cam.transform.localScale = new Vector3(Mathf.Min(cam.transform.localScale.x, 1f), Mathf.Min(cam.transform.localScale.y, 1f), 1f);
+                vcam.m_Lens.OrthographicSize = Mathf.Min(vcam.m_Lens.OrthographicSize, 4.5f);
+                cam.transform.localScale = new Vector3(Mathf.Min(cam.transform.localScale.x, 0.9f), Mathf.Min(cam.transform.localScale.y, 0.9f), 1f);
             }
         }
     }

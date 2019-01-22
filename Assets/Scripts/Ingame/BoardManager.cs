@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class BoardManager : MonoBehaviour {
 
@@ -14,7 +15,8 @@ public class BoardManager : MonoBehaviour {
     public GameObject floor1;
     public GameObject floor2;
     public GameObject floor3;
-    public GameObject Cam;
+    public TouchCameraInGame TCIG;
+    public CinemachineVirtualCamera vcam;
 
     public int is_floor; //현재 플로어
     public bool is_clear = false; //그 스테이지를 클리어했니?
@@ -44,9 +46,11 @@ public class BoardManager : MonoBehaviour {
         GameObject board = GameObject.Find("Board");
         BoardTileLoc btl = board.GetComponent<BoardTileLoc>();
         GameObject player_instance = Instantiate(cat) as GameObject; //플레이어 생성
+        TCIG.pl_cam = player_instance.transform.GetChild(5).gameObject;
         player_instance.name = "Player";
         player_instance.transform.position += new Vector3(btl.player_loc[0], btl.player_loc[1], 0f); //시작 위치로 플레이어를 옮긴다.
         player_instance.transform.GetChild(0).transform.localPosition += new Vector3(0f, 0f, btl.player_loc[1]-0.5f);
+        vcam.Follow = player_instance.transform.GetChild(5).transform;
         if (btl.floorNumber >= 3) //3층 이상 있는 경우
         {
             GameObject dogboard3 = floor[2].transform.GetChild(1).gameObject; //floor3를 불러와
@@ -290,13 +294,6 @@ public class BoardManager : MonoBehaviour {
         }
     }
 
-    void CameraSetting()
-    {
-        GameObject board = GameObject.Find("Board");
-        BoardTileLoc btl = board.GetComponent<BoardTileLoc>();
-        Cam.transform.position += new Vector3(btl.camera_loc[0], btl.camera_loc[1], 0f);
-    }
-
     public void SetScene(int level) { //보드 만드는 함수
         BoardSetup(level);
         UnitSetup();
@@ -304,7 +301,6 @@ public class BoardManager : MonoBehaviour {
         StairSetup();
         ClearTileSetup();
         FloorDisplay();
-        CameraSetting();
         if (level == 1 || level == 2 || level == 6 || level == 7 || level == 15 || level == 17) //--> 튜토리얼 늘어날 때마다 추가
         {
             Tutorial(level);

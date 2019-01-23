@@ -6,9 +6,15 @@ public class Tutorial7_2 : MonoBehaviour {
 
     private GameObject pl;
     private PlayerController pl_con;
+    private GameObject board;
 
-	// Update is called once per frame
-	void Update () {
+    private void Start()
+    {
+        board = GameObject.Find("Board");
+    }
+
+    // Update is called once per frame
+    void Update () {
         if (transform.GetComponent<Tutorial_Process>().tutorial_process == 5)
         {
             pl = GameObject.Find("Player");
@@ -17,7 +23,7 @@ public class Tutorial7_2 : MonoBehaviour {
         } else if (transform.GetComponent<Tutorial_Process>().tutorial_process == 6) {
             if (pl_con.boninging)
             {
-                transform.GetChild(2).gameObject.SetActive(false);
+                board.transform.GetChild(2).gameObject.SetActive(false);
                 transform.GetComponent<Tutorial_Process>().tutorial_process = 10;
                 return;
             }
@@ -45,7 +51,7 @@ public class Tutorial7_2 : MonoBehaviour {
             }
             if (!pl_con.boning)
             {
-                transform.GetChild(2).gameObject.SetActive(false);
+                board.transform.GetChild(2).gameObject.SetActive(false);
                 GameObject.Find("Main Camera").transform.GetChild(0).gameObject.transform.GetChild(2).gameObject.transform.GetChild(1).gameObject.SetActive(true);
                 GameObject.Find("Main Camera").transform.GetChild(0).gameObject.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.SetActive(false);
                 transform.GetComponent<Tutorial_Process>().tutorial_process = 7;

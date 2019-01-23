@@ -37,6 +37,8 @@ public class Move_Up : MonoBehaviour {
             {
                 if (!pl_con.boning)
                 {
+                TCIG.vcam_com.m_XDamping = 0.5f;
+                TCIG.vcam_com.m_YDamping = 0.5f;
                 TCIG.vcam_com.m_DeadZoneWidth = 0.5f;
                 TCIG.vcam_com.m_DeadZoneHeight = 0.75f;
                 player.transform.GetChild(5).transform.localPosition = new Vector3(0f,0f,0f);
@@ -46,6 +48,8 @@ public class Move_Up : MonoBehaviour {
                 {
                     RaycastHit2D hit;
                     if (pl_con.hitCollider(0, 1, out hit)) {
+                    TCIG.vcam_com.m_XDamping = 0.5f;
+                    TCIG.vcam_com.m_YDamping = 0.5f;
                     TCIG.vcam_com.m_DeadZoneWidth = 0.5f;
                     TCIG.vcam_com.m_DeadZoneHeight = 0.75f;
                     player.transform.GetChild(5).transform.localPosition = new Vector3(0f, 0f, 0f);

@@ -24,7 +24,6 @@ public class StairLoc
 
 public class BoardTileLoc : MonoBehaviour {
 
-    public float[] camera_loc = new float[2]; //0 : 카메라 X축 위치, 1 : 카메라 Y축 위치
     public int floorNumber; //층 갯수
     public int three_star_point; //3성 점수 하한
     public int two_star_point; //2성 점수 하한

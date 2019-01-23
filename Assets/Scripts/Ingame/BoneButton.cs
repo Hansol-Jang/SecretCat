@@ -35,6 +35,8 @@ public class BoneButton : MonoBehaviour {
             BoardManager BM_SC = BM.GetComponent<BoardManager>();
             if (!pl_con.cat_death && !BM_SC.is_clear && !pl_con.boninging && !GameManager.instance.is_menu && !pl_con.moving && (pl_con.pc_floor == BM_SC.is_floor))
             {
+            TCIG.vcam_com.m_XDamping = 0.5f;
+            TCIG.vcam_com.m_YDamping = 0.5f;
             TCIG.vcam_com.m_DeadZoneWidth = 0.5f;
             TCIG.vcam_com.m_DeadZoneHeight = 0.75f;
             player.transform.GetChild(5).transform.localPosition = new Vector3(0f, 0f, 0f);

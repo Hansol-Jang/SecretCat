@@ -7,6 +7,7 @@ using Cinemachine;
 public class TouchCameraInGame : MonoBehaviour
 {
     public bool nonbutton = false;
+    public bool start_zoom = false; //시작할 때 터치하면 줌인 멈추는 변수
 
     public CinemachineVirtualCamera vcam;
     public CinemachineFramingTransposer vcam_com;
@@ -32,6 +33,11 @@ public class TouchCameraInGame : MonoBehaviour
         }
         else if (Input.touchCount == 1 && !nonbutton)
         {
+            if (!start_zoom) //시작할 때 터치하면 줌인 멈추는 코드
+            {
+                start_zoom = true;
+            }
+            
             if (!GameManager.instance.is_menu)
             { //메뉴가 켜져있지 않으면
                 if (oldTouchPosition == new Vector2(-9999f, -9999f))
@@ -44,6 +50,8 @@ public class TouchCameraInGame : MonoBehaviour
                     Vector2 newTouchPosition = Input.GetTouch(0).position;
                     if ((newTouchPosition - oldTouchPosition).sqrMagnitude < 15000f)
                     { //처음 터치한 곳과 터치를 움직인 곳의 거리가 얼마 차이 안 날때
+                        vcam_com.m_XDamping = 0f;
+                        vcam_com.m_YDamping = 0f;
                         vcam_com.m_DeadZoneWidth = 0f;
                         vcam_com.m_DeadZoneHeight = 0f;
                         pl_cam.transform.localPosition += transform.TransformDirection(((oldTouchPosition.x - newTouchPosition.x) * cam.orthographicSize / cam.pixelHeight * 2f), ((oldTouchPosition.y - newTouchPosition.y) * cam.orthographicSize / cam.pixelHeight * 2f), 0f);

@@ -630,17 +630,35 @@ public class PlayerController : MonoBehaviour
         float sqrRemainingDistance = (bone_in.transform.position - end).sqrMagnitude;
         float x_speed = 1.5f;
         float y_speed = 1.5f;
-        while (sqrRemainingDistance > 0.15f)
+        if (y != 0)
         {
-            bone_in.transform.localScale += new Vector3(x_scale,y_scale,0f);
-            bone_in.GetComponent<Rigidbody2D>().velocity = new Vector3(horizontalMove * x_speed, verticalMove * y_speed, 0f);
-            sqrRemainingDistance = (bone_in.transform.position - end).sqrMagnitude;
-            x_speed -= x_accel;
-            y_speed -= y_accel;
-            x_scale -= x_scale_accel;
-            y_scale -= y_scale_accel;
-            yield return null;
+            while (sqrRemainingDistance > 0.1f)
+            {
+                bone_in.transform.localScale += new Vector3(x_scale, y_scale, 0f);
+                bone_in.GetComponent<Rigidbody2D>().velocity = new Vector3(horizontalMove * x_speed, verticalMove * y_speed, 0f);
+                sqrRemainingDistance = (bone_in.transform.position - end).sqrMagnitude;
+                x_speed -= x_accel;
+                y_speed -= y_accel;
+                x_scale -= x_scale_accel;
+                y_scale -= y_scale_accel;
+                yield return null;
+            }
         }
+        else
+        {
+            while (sqrRemainingDistance > 0.3f)
+            {
+                bone_in.transform.localScale += new Vector3(x_scale, y_scale, 0f);
+                bone_in.GetComponent<Rigidbody2D>().velocity = new Vector3(horizontalMove * x_speed, verticalMove * y_speed, 0f);
+                sqrRemainingDistance = (bone_in.transform.position - end).sqrMagnitude;
+                x_speed -= x_accel;
+                y_speed -= y_accel;
+                x_scale -= x_scale_accel;
+                y_scale -= y_scale_accel;
+                yield return null;
+            }
+        }
+        
         Destroy(bone_in);
         for (int i = 0; i < GameManager.instance.dogs.Count; i++)
         {

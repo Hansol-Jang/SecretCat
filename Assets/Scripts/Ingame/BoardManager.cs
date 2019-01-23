@@ -16,6 +16,7 @@ public class BoardManager : MonoBehaviour {
     public GameObject floor2;
     public GameObject floor3;
     public TouchCameraInGame TCIG;
+    public GameObject cam;
     public CinemachineVirtualCamera vcam;
 
     public int is_floor; //현재 플로어
@@ -246,17 +247,12 @@ public class BoardManager : MonoBehaviour {
     void Tutorial(int level) //튜토리얼 만들기
     {
         GameObject prefab = Resources.Load("Prefabs/Tutorial" + level) as GameObject;
-        GameObject instance = Instantiate(prefab) as GameObject;
+        GameObject instance = Instantiate(prefab, cam.transform) as GameObject;
         instance.name = "Tutorial";
         GameManager.instance.is_menu = true;
-    }
-
-    void Tutorial_Move()
-    {
-        GameObject board = GameObject.Find("Board");
-        BoardTileLoc btl = board.GetComponent<BoardTileLoc>();
-        GameObject t = GameObject.Find("Tutorial");
-        t.transform.position += new Vector3(btl.camera_loc[0], btl.camera_loc[1], 0f);
+        if (level == 1) {
+            transform.GetChild(0).GetChild(0).GetChild(0).GetChild(1).GetComponent<Tutorial1>().tut1 = true;
+        }
     }
 
     void FloorDisplay() //플로어 UI를 보이기
@@ -294,6 +290,30 @@ public class BoardManager : MonoBehaviour {
         }
     }
 
+    IEnumerator CameraZoom(int level)
+    {
+        GameManager.instance.is_menu = true;
+        yield return new WaitForSeconds(1.2f);
+        while (vcam.m_Lens.OrthographicSize > 2.5f)
+        {
+            if (TCIG.start_zoom)
+            {
+                break;
+            }
+            vcam.m_Lens.OrthographicSize -= 0.02f;
+            cam.transform.localScale -= new Vector3(0.02f / 5, 0.02f / 5, 0f);
+            vcam.m_Lens.OrthographicSize = Mathf.Max(vcam.m_Lens.OrthographicSize, 2.5f);
+            cam.transform.localScale = new Vector3(Mathf.Max(cam.transform.localScale.x, 0.5f), Mathf.Max(cam.transform.localScale.y, 0.5f), 1f);
+            yield return null;
+        }
+        GameManager.instance.is_menu = false;
+        cam.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+        if (level == 1 || level == 2 || level == 6 || level == 7 || level == 15 || level == 17) //--> 튜토리얼 늘어날 때마다 추가
+        {
+            Tutorial(level);
+        }
+    }
+
     public void SetScene(int level) { //보드 만드는 함수
         BoardSetup(level);
         UnitSetup();
@@ -301,13 +321,6 @@ public class BoardManager : MonoBehaviour {
         StairSetup();
         ClearTileSetup();
         FloorDisplay();
-        if (level == 1 || level == 2 || level == 6 || level == 7 || level == 15 || level == 17) //--> 튜토리얼 늘어날 때마다 추가
-        {
-            Tutorial(level);
-        }
-        if (level == 1 || level == 2 || level == 6 || level == 7 || level == 15 || level == 17) //--> 튜토리얼 늘어날 때마다 추가
-        {
-            Tutorial_Move();
-        }
+        StartCoroutine("CameraZoom",level);
     }
 }

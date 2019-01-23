@@ -37,14 +37,20 @@ public class Move_Down : MonoBehaviour {
             {
                 if (!pl_con.boning)
                 {
-                    pl_con.Move_Down();
+                TCIG.vcam_com.m_DeadZoneWidth = 0.5f;
+                TCIG.vcam_com.m_DeadZoneHeight = 0.75f;
+                player.transform.GetChild(5).transform.localPosition = new Vector3(0f, 0f, 0f);
+                pl_con.Move_Down();
                 }
                 else
                 {
                     RaycastHit2D hit;
                     if (pl_con.hitCollider(0, -1, out hit))
                     {
-                        pl_con.Bone_Down();
+                    TCIG.vcam_com.m_DeadZoneWidth = 0.5f;
+                    TCIG.vcam_com.m_DeadZoneHeight = 0.75f;
+                    player.transform.GetChild(5).transform.localPosition = new Vector3(0f, 0f, 0f);
+                    pl_con.Bone_Down();
                     }
                 }
             }

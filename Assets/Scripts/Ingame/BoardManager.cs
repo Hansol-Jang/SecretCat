@@ -314,6 +314,11 @@ public class BoardManager : MonoBehaviour {
         }
     }
 
+    void BGMPlay(AudioSource audioSource, AudioClip audioClip) //BGM 깔아주는 함수
+    {
+        SoundManager.instance.SingleSound(audioSource, audioClip);
+    }
+
     public void SetScene(int level) { //보드 만드는 함수
         BoardSetup(level);
         UnitSetup();
@@ -321,6 +326,7 @@ public class BoardManager : MonoBehaviour {
         StairSetup();
         ClearTileSetup();
         FloorDisplay();
+        BGMPlay(SoundManager.instance.bgm_source, SoundManager.instance.bgm0);
         StartCoroutine("CameraZoom",level);
     }
 }

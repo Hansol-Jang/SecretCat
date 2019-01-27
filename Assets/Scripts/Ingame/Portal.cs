@@ -7,8 +7,11 @@ public class Portal : MonoBehaviour {
 
     [HideInInspector] public int[] is_loc_portal;
 
+    public AudioSource sfx_source; //효과음 오디오소스
+
     private GameObject board; // 보드판 게임오브젝트
     private BoardTileLoc loctile; // 보드타일록 스크립트
+    
 
     // Use this for initialization
     protected void Start () {
@@ -29,6 +32,7 @@ public class Portal : MonoBehaviour {
         int[] temp_loc = new int[2];
         if (collision.gameObject.tag == "Player") { //플레이어가 포탈에 들어오면
             if (pl_con.re_portal == false) {
+                SoundManager.instance.SingleSound(sfx_source, SoundManager.instance.portal0);
                 for (int i = 0; i < GameManager.instance.portals.Count; i++) {
                     if (GameManager.instance.portals[i].is_loc_portal[0] == -is_loc_portal[0]) {
                         temp_loc[0] = GameManager.instance.portals[i].is_loc_portal[1];

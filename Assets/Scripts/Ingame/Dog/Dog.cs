@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class Dog : MonoBehaviour {
 
+    public AudioSource sfx_source;
 
     [HideInInspector] public Vector3 dsp_ve3; //강아지 스프라이트 기본 위치 
     [HideInInspector] public float atkTime = 0f;
+    [HideInInspector] public bool bone_sound = false;
     [HideInInspector] public bool boned = false; //뼈다귀에 매혹되었는지?
     [HideInInspector] public int[] is_loc_dog;// 강아지 현재 위치
     [HideInInspector] public PlayerController pc; // 플레이어컨트롤러 스크립트
@@ -52,6 +54,23 @@ public class Dog : MonoBehaviour {
         {
             dsp_anim.SetBool("anim_bone", true);
             dsp.transform.localPosition = new Vector3(-0.074f, 0.269f, 0f);
+        }
+    }
+
+    public void Attack()
+    {
+        if (!boned)
+        {
+            SoundManager.instance.RandomizeSound(sfx_source, SoundManager.instance.dog_atk);
+        }
+        
+    }
+
+    public void Attack_Far()
+    {
+        if (!boned)
+        {
+            SoundManager.instance.RandomizeSound(sfx_source, SoundManager.instance.dog_far_atk);
         }
     }
 }

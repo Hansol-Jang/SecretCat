@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask blockingLayer2;
     public GameObject bone;
     public Sprite bone_sp;
+    public AudioSource sfx_source;
     public List<LogData> log = new List<LogData>();
     [HideInInspector] public int cat_dir = 1; //방향 인덱스
     [HideInInspector] public int dog_die_num = 0; //개 죽인 횟수
@@ -201,6 +202,8 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "AttackRange") //공격 범위랑 닿았을 때
         {
+            SoundManager.instance.SoundStop(SoundManager.instance.bgm_source);
+            SoundManager.instance.SingleSound(sfx_source, SoundManager.instance.cat_die0);
             cat_death = true;
             GameManager.instance.is_menu = true;
             dog_sr = collision.gameObject.transform.parent.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
@@ -211,6 +214,7 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.gameObject.tag == "ClearTile" && !cat_death) //클리어 타일에 닿았을 때
         {
+            SoundManager.instance.SoundStop(SoundManager.instance.bgm_source);
             StartCoroutine("ClearTime");
         }
     }
@@ -228,7 +232,7 @@ public class PlayerController : MonoBehaviour
 
     public void Die() //죽을 때 스프라이트 바뀌는 함수
     {
-            ps_sp.cat_anim.SetBool("Die", true);
+        ps_sp.cat_anim.SetBool("Die", true);
     }
 
     public void ClearSP() //클리어했을 때 스프라이트 바뀌는 함수
@@ -410,6 +414,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void StairSound()
+    {
+        SoundManager.instance.SingleSound(sfx_source, SoundManager.instance.stair0);
+    }
+
     public void AddLogData() //로그 데이터 만들기
     {
         LogData log_data = new LogData(); //로그데이터 작성
@@ -584,6 +593,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                SoundManager.instance.SingleSound(sfx_source, SoundManager.instance.cat_atk0);
                 ps_sp.cat_anim.SetInteger("Attack", anim_dir);
             }
 
@@ -670,6 +680,7 @@ public class PlayerController : MonoBehaviour
                 GameManager.instance.dogs[i].boned = true;
                 GameManager.instance.dogs[i].gameObject.transform.GetChild(1).gameObject.tag = "BonedRange";
                 GameManager.instance.dogs[i].Boned();
+                SoundManager.instance.RandomizeSound(GameManager.instance.dogs[i].sfx_source, SoundManager.instance.bone);
                 break;
             }
         }

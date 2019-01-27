@@ -33,6 +33,7 @@ public class Stair : MonoBehaviour {
         { //플레이어가 계단에 들어오면
             if (pl_con.re_portal == false)
             {
+                pl_con.StairSound();
                 int temp = is_loc_stair[1];
                 switch (pl_con.pc_floor + is_loc_stair[1])
                 {

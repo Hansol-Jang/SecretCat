@@ -13,6 +13,7 @@ public class LodingSceneManager : MonoBehaviour {
 
 	// Use this for initialization
 	private void Start () {
+        SoundManager.instance.SoundStop(SoundManager.instance.bgm_source);
         StartCoroutine(LoadScene());
 	}
 

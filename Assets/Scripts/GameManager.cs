@@ -40,6 +40,9 @@ public class GameManager : MonoBehaviour {
         }
 
         DontDestroyOnLoad(gameObject); //파괴되지않아!
+
+        Screen.SetResolution(Screen.width, Screen.width * 9 / 16, true);
+
         dogs = new List<Dog>();
         portals = new List<Portal>();
         stairs = new List<Stair>();

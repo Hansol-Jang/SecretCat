@@ -23,6 +23,7 @@ public class NoButton : MonoBehaviour {
         {
             if (GameManager.instance.is_menu)
             {
+                SoundManager.instance.SoundStop(SoundManager.instance.bgm_source);
                 cfg.SetActive(false);
                 GameManager.instance.is_menu = false;
             }

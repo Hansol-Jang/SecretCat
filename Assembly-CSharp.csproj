@@ -154,6 +154,8 @@
     <Compile Include="Assets\Scripts\Ingame\Dog\Dog1X_Ray.cs" />
     <Compile Include="Assets\Scripts\Ingame\Dog\Dog1X_Rotation.cs" />
     <Compile Include="Assets\Scripts\Ingame\Dog\Dog1X_Rotation_Reverse.cs" />
+    <Compile Include="Assets\Scripts\Ingame\Dog\DogAttackRange.cs" />
+    <Compile Include="Assets\Scripts\Ingame\Dog\DogAttackRangeFar.cs" />
     <Compile Include="Assets\Scripts\Ingame\Dog\DogSprite.cs" />
     <Compile Include="Assets\Scripts\Ingame\GoStageSelect.cs" />
     <Compile Include="Assets\Scripts\Ingame\PlayerController.cs" />
@@ -174,6 +176,7 @@
     <Compile Include="Assets\Scripts\Ingame\Tutorial\TutorialUI.cs" />
     <Compile Include="Assets\Scripts\Loader.cs" />
     <Compile Include="Assets\Scripts\LodingSceneManager.cs" />
+    <Compile Include="Assets\Scripts\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Stage\GoWorld.cs" />
     <Compile Include="Assets\Scripts\Stage\StageBackGround.cs" />
     <Compile Include="Assets\Scripts\Stage\StageManager.cs" />

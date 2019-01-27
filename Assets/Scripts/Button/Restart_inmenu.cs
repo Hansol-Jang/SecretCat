@@ -17,8 +17,8 @@ public class Restart_inmenu : MonoBehaviour {
 
     void OnPointerDown(PointerEventData data)
     {
-        if (Input.touchCount == 1)
-        {
+         if (Input.touchCount == 1)
+         {
             if (GameManager.instance.is_menu)
             {
                 GameManager.instance.is_menu = false;

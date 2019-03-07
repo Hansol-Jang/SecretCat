@@ -22,7 +22,7 @@ public class SeeButton : MonoBehaviour {
     {
         if (Input.touchCount == 1)
         {
-            if (!GameManager.instance.is_menu)
+            if (!GameManager.instance.is_menu && !GameManager.instance.quit_menu)
             {
                 MC.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.SetActive(true);
                 MC.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(7).gameObject.SetActive(false);

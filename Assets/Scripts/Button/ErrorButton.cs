@@ -16,7 +16,7 @@ public class ErrorButton : MonoBehaviour
 
     void OnPointerDown(PointerEventData data)
     {
-        if (Input.touchCount == 1 && GameManager.instance.is_menu) //터치했고 메뉴가 켜져있다면
+        if (Input.touchCount == 1 && GameManager.instance.is_menu && !GameManager.instance.quit_menu) //터치했고 메뉴가 켜져있다면
         {
             GameManager.instance.is_menu = false;
             transform.gameObject.SetActive(false); //사라짐

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
+    public bool quit_menu = false; //종료 팝업이 떴는가?
     public bool is_menu = false; //메뉴 열렸니?
     public int world_level = 0; //월드 넘버
     public int level = 0; //레벨 넘버
@@ -104,6 +105,21 @@ public class GameManager : MonoBehaviour {
     // Update is called once per frame
     void Update() //턴 바꾸는 작업
     {
+#if UNITY_ANDROID
+
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            AppQuit();
+        }
+
+#endif
+
+#if UNITY_IOS
+
+        
+
+#endif
+
         if (playerTurn || doingSetup)
         {
             return;
@@ -134,5 +150,15 @@ public class GameManager : MonoBehaviour {
     {
         dogTurn = false;
         playerTurn = true;
+    }
+
+    public void AppQuit()
+    {
+        if (!quit_menu)
+        {
+            GameObject quit_pop = GameObject.Find("QuitUI");
+            quit_pop.transform.GetChild(0).gameObject.SetActive(true);
+            quit_menu = true;
+        }
     }
 }

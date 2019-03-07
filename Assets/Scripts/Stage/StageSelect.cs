@@ -27,7 +27,7 @@ public class StageSelect : MonoBehaviour
     {
         if (Input.touchCount == 1)
         {
-            if (!GameManager.instance.is_menu) {
+            if (!GameManager.instance.is_menu && !GameManager.instance.quit_menu) {
                 if (stage_level != 1)
                 {
                     if (GameManager.instance.stage_clear[stage_level - 2])

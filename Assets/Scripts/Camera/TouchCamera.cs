@@ -25,7 +25,7 @@ public class TouchCamera : MonoBehaviour {
                 oldTouchPosition = new Vector2(-9999f, -9999f);
             }
             else if (Input.touchCount == 1) {
-                if (!GameManager.instance.is_menu){ //메뉴가 켜져있지 않으면
+                if (!GameManager.instance.is_menu && !GameManager.instance.quit_menu){ //메뉴가 켜져있지 않으면
                     if (oldTouchPosition == new Vector2(-9999f, -9999f))
                     {
                         oldTouchPosition = Input.GetTouch(0).position; //처음에는 터치한 곳을 받아온다
@@ -57,7 +57,7 @@ public class TouchCamera : MonoBehaviour {
             }
         else if (Input.touchCount == 2)
         {
-            if (!GameManager.instance.is_menu)
+            if (!GameManager.instance.is_menu && !GameManager.instance.quit_menu)
             {
                 // Store both touches.
                 Touch touchZero = Input.GetTouch(0);

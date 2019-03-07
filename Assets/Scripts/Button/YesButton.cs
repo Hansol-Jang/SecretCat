@@ -18,7 +18,7 @@ public class YesButton : MonoBehaviour {
     {
         if (Input.touchCount == 1)
         {
-            if (GameManager.instance.is_menu)
+            if (GameManager.instance.is_menu && !GameManager.instance.quit_menu)
             {
                 GameManager.instance.is_menu = false;
                 LodingSceneManager.LoadScene("stageSelect"); //스테이지 선택 씬으로

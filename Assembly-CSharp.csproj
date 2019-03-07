@@ -131,6 +131,8 @@
     <Compile Include="Assets\Scripts\Button\NextStage.cs" />
     <Compile Include="Assets\Scripts\Button\NoButton.cs" />
     <Compile Include="Assets\Scripts\Button\NonSwipeArea.cs" />
+    <Compile Include="Assets\Scripts\Button\QuitNo.cs" />
+    <Compile Include="Assets\Scripts\Button\QuitYes.cs" />
     <Compile Include="Assets\Scripts\Button\Restart_inmenu.cs" />
     <Compile Include="Assets\Scripts\Button\SeeButton.cs" />
     <Compile Include="Assets\Scripts\Button\YesButton.cs" />

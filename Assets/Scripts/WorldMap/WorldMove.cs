@@ -36,7 +36,7 @@ public class WorldMove : MonoBehaviour {
     {
         if (Input.touchCount == 1)
         {
-            if (!GameManager.instance.is_menu) //메뉴가 안 켜져있을 때만 눌림
+            if (!GameManager.instance.is_menu && !GameManager.instance.quit_menu) //메뉴가 안 켜져있을 때만 눌림
             {
                 timer1 = Time.realtimeSinceStartup;
             }   
@@ -47,7 +47,7 @@ public class WorldMove : MonoBehaviour {
     {
         if (Input.touchCount == 1)
         {
-            if (!GameManager.instance.is_menu) //메뉴가 안 켜져있을 때만 눌림
+            if (!GameManager.instance.is_menu && !GameManager.instance.quit_menu) //메뉴가 안 켜져있을 때만 눌림
             {
                 timer2 = Time.realtimeSinceStartup;
                 if (timer2 - timer1 < 0.14f)

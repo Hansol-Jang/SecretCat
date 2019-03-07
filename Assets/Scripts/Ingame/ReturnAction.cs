@@ -36,7 +36,7 @@ public class ReturnAction : MonoBehaviour
         GameObject BM = GameObject.Find("BoardManager");
         BoardManager BM_SC = BM.GetComponent<BoardManager>();
 
-        if (!pl_con.cat_death && !BM_SC.is_clear && !pl_con.boning && !pl_con.boninging && !GameManager.instance.is_menu && !pl_con.moving)
+        if (!pl_con.cat_death && !BM_SC.is_clear && !pl_con.boning && !pl_con.boninging && !GameManager.instance.is_menu && !GameManager.instance.quit_menu && !pl_con.moving)
             {
             TCIG.vcam_com.m_XDamping = 0.5f;
             TCIG.vcam_com.m_YDamping = 0.5f;

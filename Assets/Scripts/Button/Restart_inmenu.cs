@@ -19,7 +19,7 @@ public class Restart_inmenu : MonoBehaviour {
     {
          if (Input.touchCount == 1)
          {
-            if (GameManager.instance.is_menu)
+            if (GameManager.instance.is_menu && !GameManager.instance.quit_menu)
             {
                 GameManager.instance.is_menu = false;
                 LodingSceneManager.LoadScene("ingame");

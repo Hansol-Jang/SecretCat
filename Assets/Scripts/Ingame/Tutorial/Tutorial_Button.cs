@@ -21,7 +21,7 @@ public class Tutorial_Button : MonoBehaviour {
     {
         if (Input.touchCount == 1)
         {
-            if (GameManager.instance.is_menu)
+            if (GameManager.instance.is_menu && !GameManager.instance.quit_menu)
             {
                 TP.tutorial_process += 1;
                 TP.GoProcess();

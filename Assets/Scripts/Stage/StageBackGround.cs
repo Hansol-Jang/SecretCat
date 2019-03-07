@@ -18,7 +18,7 @@ public class StageBackGround : MonoBehaviour {
     {
         if (Input.touchCount == 1)
         {
-            if (!GameManager.instance.is_menu)
+            if (!GameManager.instance.is_menu && !GameManager.instance.quit_menu)
             {
                 GameObject SM = GameObject.Find("StageManager");
                 StageManager SMSC = SM.GetComponent<StageManager>();

@@ -21,7 +21,7 @@ public class GoStageSelect : MonoBehaviour {
     {
         if (Input.touchCount == 1)
         {
-            if (!GameManager.instance.is_menu)
+            if (!GameManager.instance.is_menu && !GameManager.instance.quit_menu)
             {
                 GameManager.instance.is_menu = true;
                 cfg.SetActive(true);

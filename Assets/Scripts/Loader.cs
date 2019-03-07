@@ -10,7 +10,6 @@ public class Loader : MonoBehaviour {
     // Use this for initialization
     void Awake () {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        //Screen.SetResolution(Screen.width, Screen.width * 9/16, true);
         if (GameManager.instance == null)
             Instantiate(gameManager);
         if (SoundManager.instance == null)

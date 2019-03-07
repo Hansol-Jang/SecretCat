@@ -33,7 +33,7 @@ public class Move_Down : MonoBehaviour {
             PlayerController pl_con = player.GetComponent<PlayerController>();
             GameObject BM = GameObject.Find("BoardManager");
             BoardManager BM_SC = BM.GetComponent<BoardManager>();
-            if (!pl_con.cat_death && !BM_SC.is_clear && !pl_con.boninging && !GameManager.instance.is_menu && !pl_con.moving && (pl_con.pc_floor == BM_SC.is_floor))
+            if (!pl_con.cat_death && !BM_SC.is_clear && !pl_con.boninging && !GameManager.instance.is_menu && !GameManager.instance.quit_menu && !pl_con.moving && (pl_con.pc_floor == BM_SC.is_floor))
             {
                 if (!pl_con.boning)
                 {

@@ -19,7 +19,7 @@ public class GoWorld : MonoBehaviour {
     {
         if (Input.touchCount == 1)
         {
-            if (!GameManager.instance.is_menu) { //메뉴가 켜지지 않았다면
+            if (!GameManager.instance.is_menu && !GameManager.instance.quit_menu) { //메뉴가 켜지지 않았다면
                 LodingSceneManager.LoadScene("worldSelect");
             }
         }

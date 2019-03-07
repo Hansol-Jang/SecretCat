@@ -21,9 +21,8 @@ public class NoButton : MonoBehaviour {
     {
         if (Input.touchCount == 1)
         {
-            if (GameManager.instance.is_menu)
+            if (GameManager.instance.is_menu && !GameManager.instance.quit_menu)
             {
-                SoundManager.instance.SoundStop(SoundManager.instance.bgm_source);
                 cfg.SetActive(false);
                 GameManager.instance.is_menu = false;
             }

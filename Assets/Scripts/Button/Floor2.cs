@@ -27,7 +27,7 @@ public class Floor2 : MonoBehaviour {
         {
         GameObject player = GameObject.Find("Player");
         PlayerController pl_con = player.GetComponent<PlayerController>();
-        if (!BM.is_clear && !pl_con.boninging && !GameManager.instance.is_menu && !pl_con.moving && !pl_con.cat_death)
+        if (!BM.is_clear && !pl_con.boninging && !GameManager.instance.is_menu && !GameManager.instance.quit_menu && !pl_con.moving && !pl_con.cat_death)
         {
             if (BM.is_floor != 2) //보드판이 2층을 보이지 않는다면
             {

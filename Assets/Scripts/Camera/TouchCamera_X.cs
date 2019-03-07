@@ -43,7 +43,8 @@ public class TouchCamera_X : MonoBehaviour
             }
             else if (Input.touchCount == 1)
             {
-                if (!GameManager.instance.is_menu){ //메뉴가 안 켜져있을 때
+                if (!GameManager.instance.is_menu && !GameManager.instance.quit_menu)
+            { //메뉴가 안 켜져있을 때
                     if (oldTouchPosition == new Vector2(-9999f, -9999f))
                     {
                         oldTouchPosition = Input.GetTouch(0).position; //처음에는 터치한 곳을 받아온다

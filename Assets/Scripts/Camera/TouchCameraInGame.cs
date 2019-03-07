@@ -33,12 +33,12 @@ public class TouchCameraInGame : MonoBehaviour
         }
         else if (Input.touchCount == 1 && !nonbutton)
         {
-            if (!start_zoom) //시작할 때 터치하면 줌인 멈추는 코드
+            if (!start_zoom && !GameManager.instance.quit_menu) //시작할 때 터치하면 줌인 멈추는 코드
             {
                 start_zoom = true;
             }
             
-            if (!GameManager.instance.is_menu)
+            if (!GameManager.instance.is_menu && !GameManager.instance.quit_menu)
             { //메뉴가 켜져있지 않으면
                 if (oldTouchPosition == new Vector2(-9999f, -9999f))
                 {
@@ -62,7 +62,7 @@ public class TouchCameraInGame : MonoBehaviour
         }
         else if (Input.touchCount == 2 && !nonbutton)
         {
-            if (!GameManager.instance.is_menu)
+            if (!GameManager.instance.is_menu && !GameManager.instance.quit_menu)
             {
                 // Store both touches.
                 Touch touchZero = Input.GetTouch(0);

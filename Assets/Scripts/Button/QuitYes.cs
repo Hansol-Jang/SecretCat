@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-//인게임에서 월드맵으로 가기
-public class GoWorld_inmenu : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
+public class QuitYes : MonoBehaviour
+{
+    void Start()
+    {
         EventTrigger eventTrigger = GetComponent<EventTrigger>();
         EventTrigger.Entry entry_PointerDown = new EventTrigger.Entry();
         entry_PointerDown.eventID = EventTriggerType.PointerDown;
@@ -19,10 +18,9 @@ public class GoWorld_inmenu : MonoBehaviour {
     {
         if (Input.touchCount == 1)
         {
-            if (GameManager.instance.is_menu && !GameManager.instance.quit_menu)
+            if (GameManager.instance.quit_menu)
             {
-                GameManager.instance.is_menu = false;
-                LodingSceneManager.LoadScene("worldSelect");
+                Application.Quit();
             }
         }
     }

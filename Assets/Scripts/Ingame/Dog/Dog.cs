@@ -31,9 +31,12 @@ public class Dog : MonoBehaviour {
         dsp_anim = dsp.GetComponent<Animator>();
         dsp_ve3 = dsp.transform.localPosition;
         GameManager.instance.AddDogToList(this); //리스트에 추가하라
-        is_loc_dog[0] = loctile.dog_num[GameManager.instance.dogs.Count - 1].dog_loc[2]; //시작 위치를 현재 위치에 저장
-        is_loc_dog[1] = loctile.dog_num[GameManager.instance.dogs.Count - 1].dog_loc[3];
-        is_loc_dog[2] = loctile.dog_num[GameManager.instance.dogs.Count - 1].dog_loc[4];
+        is_loc_dog[0] = loctile.dog_num[GameManager.instance.dogs.Count - 1,2]; //시작 위치를 현재 위치에 저장
+        is_loc_dog[1] = loctile.dog_num[GameManager.instance.dogs.Count - 1, 3];
+        is_loc_dog[2] = loctile.dog_num[GameManager.instance.dogs.Count - 1, 4];
+        //is_loc_dog[0] = loctile.dog_num[GameManager.instance.dogs.Count - 1].dog_loc[2]; //시작 위치를 현재 위치에 저장
+        //is_loc_dog[1] = loctile.dog_num[GameManager.instance.dogs.Count - 1].dog_loc[3];
+        //is_loc_dog[2] = loctile.dog_num[GameManager.instance.dogs.Count - 1].dog_loc[4];
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

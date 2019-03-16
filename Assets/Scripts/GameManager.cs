@@ -25,7 +25,12 @@ public class GameManager : MonoBehaviour {
     public bool[] stage_clear = new bool[27]; //스테이지 클리어 모아둔 배열 --> 스테이지 늘어날 때마다 늘려줘야함
     [HideInInspector] public bool playerTurn = true; //플레이어 턴?
     [HideInInspector] public bool dogTurn; //강아지 턴?
-    
+
+    [HideInInspector] public List<Dictionary<string, object>> boardInfo; //보드 기본정보
+    [HideInInspector] public List<Dictionary<string, object>> boardObject; //보드 오브젝트 정보
+    [HideInInspector] public List<Dictionary<string, object>> boardPortal; //보드 포탈 정보
+    [HideInInspector] public List<Dictionary<string, object>> boardStair; //보드 계단 정보
+
     private bool doingSetup; //세팅중...
 
     // Use this for initialization
@@ -58,6 +63,11 @@ public class GameManager : MonoBehaviour {
             stage_star[i] = 0;
             //이미 깬 구간은 저장된 변수를 불러와서 true로 바꿔주는 작업 필요
         }
+
+        boardInfo = CSVReader.Read("BoardInfo0");
+        boardObject = CSVReader.Read("BoardInfo1");
+        boardPortal = CSVReader.Read("BoardInfo2");
+        boardStair = CSVReader.Read("BoardInfo3");
     }
 
     public void InitGame() //게임 들어가기 전 세팅

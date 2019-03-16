@@ -146,6 +146,7 @@
     <Compile Include="Assets\Scripts\Camera\TouchCamera.cs" />
     <Compile Include="Assets\Scripts\Camera\TouchCamera_X.cs" />
     <Compile Include="Assets\Scripts\Camera\TouchCameraInGame.cs" />
+    <Compile Include="Assets\Scripts\CSVReader.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Ingame\BoardManager.cs" />
     <Compile Include="Assets\Scripts\Ingame\BoardTileLoc.cs" />

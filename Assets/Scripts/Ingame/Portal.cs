@@ -19,10 +19,10 @@ public class Portal : MonoBehaviour {
         loctile = board.GetComponent<BoardTileLoc>();
         is_loc_portal = new int[4]; // 0 : 포탈 인덱스, 1 : X축 위치, 2 : Y축 위치, 3 : 층 위치
         GameManager.instance.AddPortalToList(this); //리스트에 추가하라
-        is_loc_portal[0] = loctile.portal_num[GameManager.instance.portals.Count - 1].portal_loc[0]; //인덱스 저장
-        is_loc_portal[1] = loctile.portal_num[GameManager.instance.portals.Count - 1].portal_loc[1]; //X축 위치
-        is_loc_portal[2] = loctile.portal_num[GameManager.instance.portals.Count - 1].portal_loc[2]; //Y축 위치
-        is_loc_portal[3] = loctile.portal_num[GameManager.instance.portals.Count - 1].portal_loc[3]; //층 위치
+        is_loc_portal[0] = loctile.portal_num[GameManager.instance.portals.Count - 1,0]; //인덱스 저장
+        is_loc_portal[1] = loctile.portal_num[GameManager.instance.portals.Count - 1,1]; //X축 위치
+        is_loc_portal[2] = loctile.portal_num[GameManager.instance.portals.Count - 1,2]; //Y축 위치
+        is_loc_portal[3] = loctile.portal_num[GameManager.instance.portals.Count - 1,3]; //층 위치
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -37,6 +37,7 @@ public class BoardManager : MonoBehaviour {
         GameObject board = Instantiate(prefab, BM.transform) as GameObject;
         board.name = "Board";
         BoardTileLoc btl = board.GetComponent<BoardTileLoc>();
+        btl.Setting();
         for (int i = 0; i < btl.floorNumber; i++) //층을 배열에 넣음
         {
             floor[i] = board.transform.GetChild(i).gameObject;
@@ -56,36 +57,36 @@ public class BoardManager : MonoBehaviour {
         {
             GameObject dogboard3 = floor[2].transform.GetChild(1).gameObject; //floor3를 불러와
 
-            for (int i = 0; i < btl.dog_num.Length; i++)
+            for (int i = 0; i < btl.dog_num.GetLength(0); i++)
             { //dog_num의 크기만큼 개 유닛을 만든다.
-                if (btl.dog_num[i].dog_loc[4] == 3)
+                if (btl.dog_num[i,4] == 3)
                 {
-                    GameObject instance = Instantiate(dog[btl.dog_num[i].dog_loc[0]*4 + btl.dog_num[i].dog_loc[1]], dogboard3.transform) as GameObject;
-                    instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
+                    GameObject instance = Instantiate(dog[btl.dog_num[i,0]*4 + btl.dog_num[i,1]], dogboard3.transform) as GameObject;
+                    instance.transform.position += new Vector3(btl.dog_num[i,2], btl.dog_num[i,3], btl.dog_num[i,3]);
                 }
             }
         }
         if (btl.floorNumber >= 2) //2층 이상 있는 경우
         {
             GameObject dogboard2 = floor[1].transform.GetChild(1).gameObject; //floor2를 불러와
-            for (int i = 0; i < btl.dog_num.Length; i++)
+            for (int i = 0; i < btl.dog_num.GetLength(0); i++)
             { //dog_num의 크기만큼 개 유닛을 만든다.
-                if (btl.dog_num[i].dog_loc[4] == 2)
+                if (btl.dog_num[i, 4] == 2)
                 {
-                    GameObject instance = Instantiate(dog[btl.dog_num[i].dog_loc[0] * 4 + btl.dog_num[i].dog_loc[1]], dogboard2.transform) as GameObject;
-                    instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
+                    GameObject instance = Instantiate(dog[btl.dog_num[i, 0] * 4 + btl.dog_num[i, 1]], dogboard2.transform) as GameObject;
+                    instance.transform.position += new Vector3(btl.dog_num[i, 2], btl.dog_num[i, 3], btl.dog_num[i, 3]);
                 }
             }
         }
         if (btl.floorNumber >= 1) //1층 이상 있는 경우
         {
             GameObject dogboard1 = floor[0].transform.GetChild(1).gameObject; //floor1를 불러와
-            for (int i = 0; i < btl.dog_num.Length; i++)
+            for (int i = 0; i < btl.dog_num.GetLength(0); i++)
             { //dog_num의 크기만큼 개 유닛을 만든다.
-                if (btl.dog_num[i].dog_loc[4] == 1)
+                if (btl.dog_num[i, 4] == 1)
                 {
-                    GameObject instance = Instantiate(dog[btl.dog_num[i].dog_loc[0] * 4 + btl.dog_num[i].dog_loc[1]], dogboard1.transform) as GameObject;
-                    instance.transform.position += new Vector3(btl.dog_num[i].dog_loc[2], btl.dog_num[i].dog_loc[3], btl.dog_num[i].dog_loc[3]);
+                    GameObject instance = Instantiate(dog[btl.dog_num[i, 0] * 4 + btl.dog_num[i, 1]], dogboard1.transform) as GameObject;
+                    instance.transform.position += new Vector3(btl.dog_num[i, 2], btl.dog_num[i, 3], btl.dog_num[i, 3]);
                 }
             }
         }
@@ -98,39 +99,39 @@ public class BoardManager : MonoBehaviour {
         if (btl.floorNumber >= 3) //3층 이상 있는 경우
         {
             GameObject portalboard3 = floor[2].transform.GetChild(2).gameObject; //floor3를 불러와
-            for (int i = 0; i < btl.portal_num.Length; i++)
+            for (int i = 0; i < btl.portal_num.GetLength(0); i++)
             { //portal_num의 크기만큼 포탈을 만든다.
-                if (btl.portal_num[i].portal_loc[3] == 3)
+                if (btl.portal_num[i,3] == 3)
                 {
-                    int j = Mathf.Abs(btl.portal_num[i].portal_loc[0]);
+                    int j = Mathf.Abs(btl.portal_num[i,0]);
                     GameObject instance = Instantiate(portal[j - 1], portalboard3.transform) as GameObject;
-                    instance.transform.position += new Vector3(btl.portal_num[i].portal_loc[1], btl.portal_num[i].portal_loc[2], 990f);
+                    instance.transform.position += new Vector3(btl.portal_num[i,1], btl.portal_num[i,2], 990f);
                 }
             }
         }
         if (btl.floorNumber >= 2) //2층 이상 있는 경우
         {
             GameObject portalboard2 = floor[1].transform.GetChild(2).gameObject; //floor2를 불러와
-            for (int i = 0; i < btl.portal_num.Length; i++)
+            for (int i = 0; i < btl.portal_num.GetLength(0); i++)
             { //portal_num의 크기만큼 포탈을 만든다.
-                if (btl.portal_num[i].portal_loc[3] == 2)
+                if (btl.portal_num[i, 3] == 2)
                 {
-                    int j = Mathf.Abs(btl.portal_num[i].portal_loc[0]);
+                    int j = Mathf.Abs(btl.portal_num[i, 0]);
                     GameObject instance = Instantiate(portal[j - 1], portalboard2.transform) as GameObject;
-                    instance.transform.position += new Vector3(btl.portal_num[i].portal_loc[1], btl.portal_num[i].portal_loc[2], 990f);
+                    instance.transform.position += new Vector3(btl.portal_num[i, 1], btl.portal_num[i, 2], 990f);
                 }
             }
         }
         if (btl.floorNumber >= 1) //1층 이상 있는 경우
         {
             GameObject portalboard1 = floor[0].transform.GetChild(2).gameObject; //floor1를 불러와
-            for (int i = 0; i < btl.portal_num.Length; i++)
+            for (int i = 0; i < btl.portal_num.GetLength(0); i++)
             { //portal_num의 크기만큼 포탈을 만든다.
-                if (btl.portal_num[i].portal_loc[3] == 1)
+                if (btl.portal_num[i, 3] == 1)
                 {
-                    int j = Mathf.Abs(btl.portal_num[i].portal_loc[0]);
-                    GameObject instance = Instantiate(portal[j-1], portalboard1.transform) as GameObject;
-                    instance.transform.position += new Vector3(btl.portal_num[i].portal_loc[1], btl.portal_num[i].portal_loc[2], 990f);
+                    int j = Mathf.Abs(btl.portal_num[i, 0]);
+                    GameObject instance = Instantiate(portal[j - 1], portalboard1.transform) as GameObject;
+                    instance.transform.position += new Vector3(btl.portal_num[i, 1], btl.portal_num[i, 2], 990f);
                 }
             }
         }
@@ -143,26 +144,26 @@ public class BoardManager : MonoBehaviour {
         if (btl.floorNumber >= 3) //3층 이상 있는 경우
         {
             GameObject stairboard3 = floor[2].transform.GetChild(3).gameObject; //floor3를 불러와
-            for (int i = 0; i < btl.stair_num.Length; i++)
+            for (int i = 0; i < btl.stair_num.GetLength(0); i++)
             { //stair_num의 크기만큼 계단을 만든다.
-                if (btl.stair_num[i].stair_loc[4] == 3)
+                if (btl.stair_num[i,4] == 3)
                 {
-                    if (btl.stair_num[i].stair_loc[1] == 1)
+                    if (btl.stair_num[i,1] == 1)
                     {
                         GameObject instance = Instantiate(stair1, stairboard3.transform) as GameObject;
-                        instance.transform.position += new Vector3(btl.stair_num[i].stair_loc[2], btl.stair_num[i].stair_loc[3], 990f);
+                        instance.transform.position += new Vector3(btl.stair_num[i,2], btl.stair_num[i,3], 990f);
                         for (int j = 0; j < 5; j++)
                         {
-                            instance.GetComponent<Stair>().is_loc_stair[j] = btl.stair_num[i].stair_loc[j];
+                            instance.GetComponent<Stair>().is_loc_stair[j] = btl.stair_num[i,j];
                         }
                     }
-                    else if (btl.stair_num[i].stair_loc[1] == -1)
+                    else if (btl.stair_num[i,1] == -1)
                     {
                         GameObject instance = Instantiate(stair2, stairboard3.transform) as GameObject;
-                        instance.transform.position += new Vector3(btl.stair_num[i].stair_loc[2], btl.stair_num[i].stair_loc[3], 990f);
+                        instance.transform.position += new Vector3(btl.stair_num[i,2], btl.stair_num[i,3], 990f);
                         for (int j = 0; j < 5; j++)
                         {
-                            instance.GetComponent<Stair>().is_loc_stair[j] = btl.stair_num[i].stair_loc[j];
+                            instance.GetComponent<Stair>().is_loc_stair[j] = btl.stair_num[i,j];
                         }
                     }
                 }
@@ -171,26 +172,26 @@ public class BoardManager : MonoBehaviour {
         if (btl.floorNumber >= 2) //2층 이상 있는 경우
         {
             GameObject stairboard2 = floor[1].transform.GetChild(3).gameObject; //floor2를 불러와
-            for (int i = 0; i < btl.stair_num.Length; i++)
+            for (int i = 0; i < btl.stair_num.GetLength(0); i++)
             { //stair_num의 크기만큼 계단을 만든다.
-                if (btl.stair_num[i].stair_loc[4] == 2)
+                if (btl.stair_num[i, 4] == 2)
                 {
-                    if (btl.stair_num[i].stair_loc[1] == 1)
+                    if (btl.stair_num[i, 1] == 1)
                     {
                         GameObject instance = Instantiate(stair1, stairboard2.transform) as GameObject;
-                        instance.transform.position += new Vector3(btl.stair_num[i].stair_loc[2], btl.stair_num[i].stair_loc[3], 990f);
+                        instance.transform.position += new Vector3(btl.stair_num[i, 2], btl.stair_num[i, 3], 990f);
                         for (int j = 0; j < 5; j++)
                         {
-                            instance.GetComponent<Stair>().is_loc_stair[j] = btl.stair_num[i].stair_loc[j];
+                            instance.GetComponent<Stair>().is_loc_stair[j] = btl.stair_num[i, j];
                         }
                     }
-                    else if (btl.stair_num[i].stair_loc[1] == -1)
+                    else if (btl.stair_num[i, 1] == -1)
                     {
                         GameObject instance = Instantiate(stair2, stairboard2.transform) as GameObject;
-                        instance.transform.position += new Vector3(btl.stair_num[i].stair_loc[2], btl.stair_num[i].stair_loc[3], 990f);
+                        instance.transform.position += new Vector3(btl.stair_num[i, 2], btl.stair_num[i, 3], 990f);
                         for (int j = 0; j < 5; j++)
                         {
-                            instance.GetComponent<Stair>().is_loc_stair[j] = btl.stair_num[i].stair_loc[j];
+                            instance.GetComponent<Stair>().is_loc_stair[j] = btl.stair_num[i, j];
                         }
                     }
                 }
@@ -199,26 +200,26 @@ public class BoardManager : MonoBehaviour {
         if (btl.floorNumber >= 1) //1층 이상 있는 경우
         {
             GameObject stairboard1 = floor[0].transform.GetChild(3).gameObject; //floor1를 불러와
-            for (int i = 0; i < btl.stair_num.Length; i++)
+            for (int i = 0; i < btl.stair_num.GetLength(0); i++)
             { //stair_num의 크기만큼 계단을 만든다.
-                if (btl.stair_num[i].stair_loc[4] == 1)
+                if (btl.stair_num[i, 4] == 1)
                 {
-                    if (btl.stair_num[i].stair_loc[1] == 1)
+                    if (btl.stair_num[i, 1] == 1)
                     {
                         GameObject instance = Instantiate(stair1, stairboard1.transform) as GameObject;
-                        instance.transform.position += new Vector3(btl.stair_num[i].stair_loc[2], btl.stair_num[i].stair_loc[3], 990f);
+                        instance.transform.position += new Vector3(btl.stair_num[i, 2], btl.stair_num[i, 3], 990f);
                         for (int j = 0; j < 5; j++)
                         {
-                            instance.GetComponent<Stair>().is_loc_stair[j] = btl.stair_num[i].stair_loc[j];
+                            instance.GetComponent<Stair>().is_loc_stair[j] = btl.stair_num[i, j];
                         }
                     }
-                    else if (btl.stair_num[i].stair_loc[1] == -1)
+                    else if (btl.stair_num[i, 1] == -1)
                     {
                         GameObject instance = Instantiate(stair2, stairboard1.transform) as GameObject;
-                        instance.transform.position += new Vector3(btl.stair_num[i].stair_loc[2], btl.stair_num[i].stair_loc[3], 0f);
+                        instance.transform.position += new Vector3(btl.stair_num[i, 2], btl.stair_num[i, 3], 990f);
                         for (int j = 0; j < 5; j++)
                         {
-                            instance.GetComponent<Stair>().is_loc_stair[j] = btl.stair_num[i].stair_loc[j];
+                            instance.GetComponent<Stair>().is_loc_stair[j] = btl.stair_num[i, j];
                         }
                     }
                 }

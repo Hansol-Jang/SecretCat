@@ -32,7 +32,7 @@ public class BoardManager : MonoBehaviour {
     }
 
     void BoardSetup(int level) { //레벨에 맞는 보드를 가져온다.
-        GameObject prefab = Resources.Load("Prefabs/Board"+level) as GameObject;
+        GameObject prefab = Resources.Load("Prefabs/Board/Board"+level) as GameObject;
         GameObject BM = GameObject.Find("BoardManager");
         GameObject board = Instantiate(prefab, BM.transform) as GameObject;
         board.name = "Board";
@@ -247,7 +247,7 @@ public class BoardManager : MonoBehaviour {
 
     void Tutorial(int level) //튜토리얼 만들기
     {
-        GameObject prefab = Resources.Load("Prefabs/Tutorial" + level) as GameObject;
+        GameObject prefab = Resources.Load("Prefabs/Tutorial/Tutorial" + level) as GameObject;
         GameObject instance = Instantiate(prefab, cam.transform) as GameObject;
         instance.name = "Tutorial";
         GameManager.instance.is_menu = true;
